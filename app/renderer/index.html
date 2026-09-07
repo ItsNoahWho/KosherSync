@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self';" />
-    <title>MuslimSync</title>
+    <title>KosherSync</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -14,7 +14,7 @@
         <div class="rail-item is-active">
           <span class="rail-pill" aria-hidden="true"></span>
           <button class="rail-button is-home" type="button" title="Home" aria-label="Home">
-            <span class="rail-glyph">&#1605;</span>
+            <span class="rail-glyph">K</span>
           </button>
         </div>
 
@@ -35,7 +35,7 @@
       <!-- Channel sidebar -->
       <aside class="sidebar">
         <header class="sidebar-head">
-          <span class="sidebar-title">MuslimSync</span>
+          <span class="sidebar-title">KosherSync</span>
           <svg class="sidebar-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m6 9 6 6 6-6" />
           </svg>
@@ -82,53 +82,15 @@
           </button>
         </div>
 
-        <!-- Verse of the day, styled as a Discord embed. -->
-        <section class="embed" id="verse" aria-label="Verse of the day">
-          <div class="embed-head">
-            <span class="embed-author">Verse of the day</span>
-            <span class="embed-tag" id="verse-theme"></span>
-          </div>
-          <p class="verse-arabic" id="verse-arabic" dir="rtl" lang="ar"></p>
-          <p class="verse-translation" id="verse-translation"></p>
-          <div class="embed-foot">
-            <span class="embed-ref" id="verse-ref"></span>
-            <span class="embed-actions">
-              <button id="verse-draw" class="icon-button" type="button" title="Another verse" aria-label="Another verse">
-                <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M13.5 7a5.5 5.5 0 1 0-.9 4" />
-                  <path d="M13.6 3v3.4h-3.4" />
-                </svg>
-              </button>
-              <button id="verse-copy" class="icon-button" type="button" title="Copy" aria-label="Copy verse">
-                <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="5.75" y="5.75" width="8" height="8" rx="1.5" />
-                  <path d="M10.25 3.25a1.5 1.5 0 0 0-1.5-1.5h-5a1.5 1.5 0 0 0-1.5 1.5v5a1.5 1.5 0 0 0 1.5 1.5" />
-                </svg>
-              </button>
-            </span>
-          </div>
-        </section>
-
-        <!-- Prayer times, same embed language as the verse. -->
-        <section class="embed" id="prayers" aria-label="Prayer times">
-          <div class="embed-head">
-            <span class="embed-author">Prayer times</span>
-          </div>
-          <ul class="prayer-list" id="prayers-list"></ul>
-          <div class="embed-foot">
-            <span class="embed-ref" id="prayers-next"></span>
-          </div>
-        </section>
-
 
         <!-- User panel -->
         <footer class="panel">
           <span class="avatar">
-            <span class="avatar-glyph">&#1605;</span>
+            <span class="avatar-glyph">K</span>
             <span class="avatar-status" id="daemon-dot" title="Daemon offline"></span>
           </span>
           <span class="panel-copy">
-            <span class="panel-name">MuslimSync</span>
+            <span class="panel-name">KosherSync</span>
             <span class="panel-sub" id="status-left">daemon offline</span>
           </span>
           <button class="panel-button" data-view="settings" type="button" title="Settings" aria-label="Settings">
@@ -241,7 +203,7 @@
             </div>
           </section>
 
-          <section class="page is-hidden" id="view-commands" data-note="Drop a folder in .muslimsync/commands and it appears here">
+          <section class="page is-hidden" id="view-commands" data-note="Drop a folder in .koshersync/commands and it appears here">
             <ul class="cmd-list is-hidden" id="command-list"></ul>
 
             <div class="tool" id="command-config">
@@ -263,7 +225,7 @@
               <p class="hero-body">
                 A command is a folder with a <code>command.json</code> and a handler. Dropping one
                 in gives you the CLI command, a button here, and an agent registry entry at once.
-                <code>msync new-command &lt;name&gt;</code> scaffolds a working one.
+                <code>ksync new-command &lt;name&gt;</code> scaffolds a working one.
               </p>
             </div>
 
@@ -356,7 +318,7 @@
             </div>
           </section>
 
-          <section class="page is-hidden" id="view-settings" data-note="Stored in ~/.muslimsync/settings.json">
+          <section class="page is-hidden" id="view-settings" data-note="Stored in ~/.koshersync/settings.json">
             <div class="settings">
               <h2 class="group-title">Sync</h2>
 
@@ -368,90 +330,6 @@
                 <button class="button" type="button" id="settings-choose-root">Change</button>
               </div>
 
-              <h2 class="group-title">Daily verse</h2>
-              <div class="group">
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Reminder</span>
-                    <span class="row-help">A notification with the day's verse.</span>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" id="reminder-enabled" />
-                    <span class="switch-track" aria-hidden="true"></span>
-                  </label>
-                </div>
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Time</span>
-                    <span class="row-help">If the machine was asleep, it arrives on wake.</span>
-                  </div>
-                  <input class="field" type="time" id="reminder-time" />
-                </div>
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Translation</span>
-                    <span class="row-help" id="translation-help"></span>
-                  </div>
-                  <select class="field" id="translation">
-                    <option value="khattab">Mustafa Khattab — The Clear Quran</option>
-                    <option value="pickthall">Marmaduke Pickthall</option>
-                  </select>
-                </div>
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Show Arabic</span>
-                    <span class="row-help">Uthmani script above the translation.</span>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" id="show-arabic" />
-                    <span class="switch-track" aria-hidden="true"></span>
-                  </label>
-                </div>
-              </div>
-
-              <h2 class="group-title">Prayer times</h2>
-              <div class="group">
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Reminders</span>
-                    <span class="row-help">A notification at each prayer.</span>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" id="prayer-enabled" />
-                    <span class="switch-track" aria-hidden="true"></span>
-                  </label>
-                </div>
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Location</span>
-                    <span class="row-help" id="prayer-location-help">Found from your IP; correct it if it's off.</span>
-                  </div>
-                  <input class="field" type="text" id="prayer-location" placeholder="latitude, longitude" spellcheck="false" />
-                </div>
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Method</span>
-                    <span class="row-help">Which convention computes Fajr and Isha.</span>
-                  </div>
-                  <select class="field" id="prayer-method">
-                    <option value="mwl">Muslim World League</option>
-                    <option value="isna">ISNA (North America)</option>
-                    <option value="egypt">Egyptian Authority</option>
-                    <option value="makkah">Umm al-Qura (Makkah)</option>
-                    <option value="karachi">Karachi</option>
-                  </select>
-                </div>
-                <div class="row">
-                  <div class="row-copy">
-                    <span class="row-label">Asr</span>
-                    <span class="row-help">Hanafi puts Asr later.</span>
-                  </div>
-                  <select class="field" id="prayer-asr">
-                    <option value="standard">Standard (Shafi'i, Maliki, Hanbali)</option>
-                    <option value="hanafi">Hanafi</option>
-                  </select>
-                </div>
-              </div>
             </div>
           </section>
         </main>
@@ -459,7 +337,6 @@
     </div>
 
     <script type="module" src="app.js"></script>
-    <script type="module" src="prayer.js"></script>
     <script type="module" src="tools.js"></script>
     <script type="module" src="project.js"></script>
   </body>

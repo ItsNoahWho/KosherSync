@@ -1,6 +1,6 @@
-# MuslimSync — design plan
+# KosherSync — design plan
 
-> Argon does the syncing. MuslimSync adds the control plane, the desktop app,
+> Argon does the syncing. KosherSync adds the control plane, the desktop app,
 > and the agent tooling — all in JavaScript and Luau. No Rust is written, and
 > nothing is compiled to a binary.
 
@@ -30,7 +30,7 @@ Your fork already added, on top of upstream:
 - and on the plugin side: a project **Picker**, **CreateProject**, **AddProject**,
   **ProjectDetails**, directory browsers, master-based discovery, log shipping
 
-That master daemon is the thing MuslimSync's Electron app replaces. Everything
+That master daemon is the thing KosherSync's Electron app replaces. Everything
 else in your fork stays exactly as it is.
 
 ### Ro Sync (`ro-sync` @ `pr-17`)
@@ -86,13 +86,12 @@ the 120k-line one, rather than the reverse.
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  MuslimSync.app  (Electron — one process, no compile step) │
+│  KosherSync.app  (Electron — one process, no compile step) │
 │                                                            │
 │   Renderer                    Main process                 │
 │   • project list / create     • control daemon (Node)      │
 │   • connection status         • spawns `argon serve` per   │
 │   • capture + playtest UI       project as a child proc    │
-│   • verse of the day          • daily verse notification   │
 └──────────────┬──────────────────────────┬──────────────────┘
                │ ws://127.0.0.1:7900      │ spawn
                │ (control protocol)       ▼
@@ -103,14 +102,14 @@ the 120k-line one, rather than the reverse.
                │                            │ argon sync protocol
                ▼                            ▼
         ┌────────────────────────────────────────────┐
-        │      MuslimSync Studio plugin (Luau)       │
+        │      KosherSync Studio plugin (Luau)       │
         │   fork of argon-roblox                     │
         │   • Argon sync client  (unchanged)         │
         │   • Control client     (new)               │
         │   • Photo / Playscript / Clipboard (ported)│
         └────────────────────────────────────────────┘
 
-        `msync` CLI (Node) ──ws──> control daemon :7900
+        `ksync` CLI (Node) ──ws──> control daemon :7900
 ```
 
 ### The three rules this architecture enforces
@@ -119,7 +118,7 @@ the 120k-line one, rather than the reverse.
    (`argon-server/target/release/argon`, 2.0.28) vendored into the app. We never
    `cargo build`. If Argon ever needs a change, that's a separate, deliberate decision —
    not something the normal dev loop touches.
-2. **Sync and control are different channels.** Argon owns files↔DataModel. MuslimSync
+2. **Sync and control are different channels.** Argon owns files↔DataModel. KosherSync
    owns "read the tree, set a property, take a photo, run a playtest, tail logs."
    They never share state. A control-channel bug can't corrupt a sync.
 3. **Everything we write is JS or Luau.** `npm install` pulls zero native modules.
@@ -131,7 +130,7 @@ the 120k-line one, rather than the reverse.
 ## 3. Repository layout
 
 ```
-MuslimSync/
+KosherSync/
 ├── package.json                  # workspaces: app, daemon, cli, plugin
 ├── vendor/
 │   └── argon/{darwin-arm64,windows-x86_64,linux-x86_64}/argon
@@ -151,14 +150,13 @@ MuslimSync/
 │   ├── projects.js               # registry, create, adopt, roots
 │   └── commands/                 # custom-command loader (§5.3)
 ├── cli/
-│   ├── msync.js                  # arg parsing → op dispatch. Thin.
+│   ├── ksync.js                  # arg parsing → op dispatch. Thin.
 │   └── format.js                 # human vs --raw rendering
 ├── app/                          # Electron
-│   ├── main.js                   # embeds daemon/, spawns argon, notifications
+│   ├── main.js                   # embeds daemon/, spawns argon
 │   ├── preload.js                # narrow contextBridge surface. No shell access.
 │   └── renderer/
 │       ├── views/{projects,connection,capture,playtest,commands,settings}.js
-│       └── quran/                # verse of the day (§5.8)
 ├── plugin/                       # fork of argon-roblox
 │   └── src/
 │       ├── Control/              # NEW — control-channel client
@@ -169,9 +167,6 @@ MuslimSync/
 │       │   ├── Playscript.luau   #   ported from ro-sync
 │       │   └── Clipboard.luau    #   ported from ro-sync
 │       └── (everything else unchanged from your argon-roblox fork)
-├── quran/
-│   ├── quran.json                # Uthmani text + translation, offline
-│   └── daily.js                  # deterministic date → verse selection
 └── commands/                     # built-in custom commands (§5.3)
 ```
 
@@ -245,9 +240,9 @@ POST /artifacts/:id/consume     → one-shot, then deleted
 
 ## 5. The features
 
-### 5.1 CLI — `msync`
+### 5.1 CLI — `ksync`
 
-A Node script. `msync` connects to the control daemon, sends one op, prints the
+A Node script. `ksync` connects to the control daemon, sends one op, prints the
 result. Human output by default, `--raw` for JSON.
 
 ```
@@ -260,19 +255,18 @@ Transfer     copy  paste            ← cross-project, via SerializationService
 Capture      photo  screen  scene
 Playtest     run  start  status  logs  ui  input  capture  stop
 Commands     commands  run  <any custom command name>
-Deen         verse
 ```
 
 Cross-project copy/paste, exactly as you liked it in Ro Sync:
 
 ```bash
-msync copy Workspace/Map/Boss          # in the source project
-msync paste --to Workspace/Imported    # in the destination project
+ksync copy Workspace/Map/Boss          # in the source project
+ksync paste --to Workspace/Imported    # in the destination project
 ```
 
 `copy` asks the plugin to `SerializationService:SerializeInstancesAsync` the roots
 (one call, so cross-references survive), uploads the opaque buffer through an
-artifact lease, and installs it in `~/.muslimsync/clipboard`. `paste` leases it to
+artifact lease, and installs it in `~/.koshersync/clipboard`. `paste` leases it to
 the destination daemon and calls `DeserializeInstancesAsync` inside one
 `ChangeHistoryService` recording — one Undo reverses the whole paste.
 
@@ -286,12 +280,12 @@ split across ~5 files to respect the line cap. It needs no screenshot permission
 loads nothing from the open place.
 
 ```bash
-msync photo --focus Workspace/Map/Boss --view isometric \
+ksync photo --focus Workspace/Map/Boss --view isometric \
             --size 1024x1024 --background transparent -o boss.png
 
-msync photo --ui-target StarterGui/HUD/ShopFrame --ui only -o shop.png
+ksync photo --ui-target StarterGui/HUD/ShopFrame --ui only -o shop.png
 
-msync photo --camera-cframe "$(msync get --path Workspace/Camera --prop CFrame --raw)" -o exact.png
+ksync photo --camera-cframe "$(ksync get --path Workspace/Camera --prop CFrame --raw)" -o exact.png
 ```
 
 Behaviours worth keeping from the original: isolated subject clones without scripts;
@@ -306,13 +300,13 @@ No image dependency.
 ### 5.3 Custom commands — the extensibility layer
 
 This is the piece Ro Sync got half-right (a registry that only generates docs) and
-where MuslimSync should be genuinely better: **the registry is the implementation.**
+where KosherSync should be genuinely better: **the registry is the implementation.**
 
 A command is a folder, discovered from three roots in priority order:
 
 ```
-./.muslimsync/commands/        project-local
-~/.muslimsync/commands/        user-global
+./.koshersync/commands/        project-local
+~/.koshersync/commands/        user-global
 <app>/commands/                built-in
 ```
 
@@ -360,7 +354,7 @@ export default async function ({ args, ctx, log }) {
 
 Registering a folder gets you, for free and simultaneously:
 
-- `msync screenshot-all-guis --out ./shots` in the CLI
+- `ksync screenshot-all-guis --out ./shots` in the CLI
 - a button in the Electron app's Commands view, with a form generated from `args`
 - an entry in the generated `COMMANDS.md` and `commands.json` that a coding agent reads
 - `--help` with the arg schema
@@ -379,7 +373,7 @@ Port `plugin/Playscript.luau` + the `playtest_run` state machine. The design is 
 it just needs to be a tenth the size.
 
 ```bash
-msync playtest run --script ./bench.server.luau \
+ksync playtest run --script ./bench.server.luau \
                    --client-script ./join.client.luau \
                    --mode multiplayer --players 2 \
                    --args '{"map":"Lighthouse","laps":3}' --raw
@@ -412,18 +406,18 @@ orchestration, including from a `run.js` custom command.
 Straight ports into `daemon/ops/tree.js` + `plugin/src/Control/Handlers/`.
 
 ```bash
-msync tree --path ReplicatedStorage --depth 3
-msync query 'StarterGui/**/TextButton' --format paths
-msync get --path Workspace/Camera --prop FieldOfView
-msync set --path Workspace/Camera --prop FieldOfView --value 80 --waypoint "camera pass"
-msync find --class ProximityPrompt
-msync classinfo --class Humanoid --category Appearance
-msync logs --tail --level warn
-msync eval --file ./fixup.luau
+ksync tree --path ReplicatedStorage --depth 3
+ksync query 'StarterGui/**/TextButton' --format paths
+ksync get --path Workspace/Camera --prop FieldOfView
+ksync set --path Workspace/Camera --prop FieldOfView --value 80 --waypoint "camera pass"
+ksync find --class ProximityPrompt
+ksync classinfo --class Humanoid --category Appearance
+ksync logs --tail --level warn
+ksync eval --file ./fixup.luau
 ```
 
 Guardrails kept from Ro Sync, because they're correct: `set Parent` is refused with a
-pointer to `msync mv` (it is the single easiest way to corrupt a DataModel);
+pointer to `ksync mv` (it is the single easiest way to corrupt a DataModel);
 cross-service moves require `--force`; `--waypoint` brackets a batch of writes so one
 Ctrl-Z reverses the whole thing; every write lands in an append-only local log.
 
@@ -440,7 +434,7 @@ This is where the Electron app replaces your `master.rs`. Same flows, no Rust.
 **From the app:** pick a Projects root → project list with per-project serve toggles →
 Create Project (name + folder, with a directory browser) → Add Existing (paste or browse).
 Each served project gets its own `argon serve` child process on its own port; the app
-tracks them in a registry at `~/.muslimsync/registry.json` (canonical path, port, PID,
+tracks them in a registry at `~/.koshersync/registry.json` (canonical path, port, PID,
 boot id — a stale PID is never enough authority to kill a process).
 
 **From Studio:** the plugin's Connect page finds no daemon for the open place, so it
@@ -453,7 +447,7 @@ plugin reconnects. Existing `gameId` is idempotent; a name collision gets a
 
 That flow is `project_init.rs`'s design, which is the best-considered thing in Ro Sync.
 
-**From the CLI:** `msync init`, `msync adopt <path>`, `msync ls`, `msync serve`.
+**From the CLI:** `ksync init`, `ksync adopt <path>`, `ksync ls`, `ksync serve`.
 
 ### 5.7 Electron shell
 
@@ -463,53 +457,13 @@ That flow is `project_init.rs`'s design, which is the best-considered thing in R
   daemon ensure/stop, plugin install, settings. **No arbitrary shell command**, matching
   the boundary Ro Sync's `bridge.js` draws for the Tauri host.
 - Ship as a plain checkout plus a launcher. `npm install && npm start`, and a
-  double-clickable `MuslimSync.command` (macOS) / `MuslimSync.bat` (Windows) that runs
+  double-clickable `KosherSync.command` (macOS) / `KosherSync.bat` (Windows) that runs
   `npx electron .`. `electron-builder` for a real `.app`/`.exe` is available later but
   is never on the critical path.
-- **Plugin install** copies the built `MuslimSync.rbxm` into
+- **Plugin install** copies the built `KosherSync.rbxm` into
   `~/Documents/Roblox/Plugins` (macOS) or `%LOCALAPPDATA%\Roblox\Plugins` (Windows).
   Building the plugin is `rojo build` — a `.rbxm`, not a binary.
 
-### 5.8 Quran in the UI, and the daily reminder
-
-Bundled offline at `quran/quran.json` — Uthmani Arabic + an English translation +
-surah/ayah metadata. A few MB, no network, no API key, works on a plane.
-
-**In the app.** A verse card, always present, at the top of the sidebar:
-
-```
-┌──────────────────────────────────────────────┐
-│  ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ            │
-│                                              │
-│  "Read in the name of your Lord who created" │
-│  Al-'Alaq 96:1                          ↻ ⧉  │
-└──────────────────────────────────────────────┘
-```
-
-Arabic right-aligned in a proper Arabic face (bundle Amiri or Scheherazade so it
-renders correctly on Windows too), translation below, reference beneath. `↻` draws a
-new verse, `⧉` copies. Full text on click.
-
-**Selection is deterministic per day** — everyone opening the app on the same date sees
-the same verse, and reopening it doesn't reshuffle:
-
-```js
-// quran/daily.js
-const index = hash(`${year}-${month}-${day}`) % verses.length;
-```
-
-**Daily reminder.** A configurable time (default 09:00) fires an Electron
-`Notification` with the reference and the translation's first line; clicking it focuses
-the app on the verse card. Settings: on/off, time, translation, and whether to show the
-Arabic. The schedule survives restarts via `~/.muslimsync/settings.json` and re-arms on
-`app.on('ready')` — if the machine was asleep past the trigger, it fires once on wake
-rather than silently skipping the day.
-
-**In the CLI.** `msync verse` prints the day's verse. It ships as a **built-in custom
-command** (`commands/verse/`), so it doubles as the worked example of §5.3 that anyone
-can read and copy.
-
----
 
 ## 6. Milestones
 
@@ -517,14 +471,14 @@ Each one ends somewhere usable. Nothing is a big-bang cutover.
 
 | # | Milestone | Done when |
 | --- | --- | --- |
-| **0** | Skeleton | Repo, workspaces, vendored `argon` binary, `msync --version`, CI with the line-cap and registry gates |
+| **0** | Skeleton | Repo, workspaces, vendored `argon` binary, `ksync --version`, CI with the line-cap and registry gates |
 | **1** | Control channel | Plugin fork connects to the Node daemon; `ping`, `capabilities`, `logs` round-trip. Argon sync still works untouched. |
 | **2** | Navigation + mutation | `get set ls tree props source find query new rm mv attr tag call select waypoint eval` — the daily-driver surface |
-| **3** | Electron shell | Projects root, project list, create/adopt, per-project `argon serve` lifecycle, connection status, **verse card + daily reminder** |
-| **4** | Artifacts + capture | Lease transport, `Photo.luau` port, `msync photo`, capture view in the app |
+| **3** | Electron shell | Projects root, project list, create/adopt, per-project `argon serve` lifecycle, connection status |
+| **4** | Artifacts + capture | Lease transport, `Photo.luau` port, `ksync photo`, capture view in the app |
 | **5** | Copy / paste | `SerializationService` round-trip, cross-project clipboard |
-| **6** | Custom commands | Loader, three implementation styles, generated registry + docs, CLI/app/agent surfaces, `commands/verse` as the reference example |
-| **7** | Playtest agent | `Playscript.luau` port, `msync playtest run`, NDJSON stream, exit codes, playtest view in the app |
+| **6** | Custom commands | Loader, three implementation styles, generated registry + docs, CLI/app/agent surfaces |
+| **7** | Playtest agent | `Playscript.luau` port, `ksync playtest run`, NDJSON stream, exit codes, playtest view in the app |
 | **8** | Polish | `doctor`, `status`, agent-facing `AGENTS.md` generation, Windows pass |
 
 Milestone 3 is the first point where the thing is genuinely nicer to use than Argon
@@ -542,15 +496,14 @@ that already work.
 | Studio serializes `.rbxm`, not us | Avoids writing a binary-format parser in JS entirely | Offline `.rbxl` building becomes a requirement (then: `argon build` shells out) |
 | Registry *is* the implementation | Ro Sync's two-source-of-truth registry needs a CI script to stay honest | Never |
 | 400-line file cap | `Plugin.luau` is 12,252 lines | Never |
-| Full offline Quran text | Works with no network, no API key, no rate limit | Only if bundle size becomes a real problem |
 
 ---
 
 ## 8. Open items to settle before milestone 1
 
-1. **CLI name.** `msync` is short and unclaimed; `muslimsync` as an alias. Confirm.
+1. **CLI name.** `ksync` is short and unclaimed; `koshersync` as an alias. Confirm.
 2. ~~**Plugin identity.**~~ **Settled:** one unified plugin. Fork
-   `argon-roblox-fresh` into `plugin/`, rename `Argon` → `MuslimSync`, and add
+   `argon-roblox-fresh` into `plugin/`, rename `Argon` → `KosherSync`, and add
    `src/Control/` alongside the existing `src/Client/` sync code. Two plugins would
    mean two toolbar buttons, two widgets, and two connection states for one project.
    Rename surface is small: 61 `script:FindFirstAncestor("Argon")` calls, the

@@ -1,9 +1,9 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 local Components = App.Components
 
-local Fusion = require(MuslimSync.Packages.Fusion)
-local Signal = require(MuslimSync.Packages.Signal)
+local Fusion = require(KosherSync.Packages.Fusion)
+local Signal = require(KosherSync.Packages.Signal)
 
 local Theme = require(App.Theme)
 

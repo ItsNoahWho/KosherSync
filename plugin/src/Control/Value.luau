@@ -268,7 +268,7 @@ local coercions: { [string]: (string, { number }?) -> any } = {
 
 --- Turns a typed string into the type a property already holds.
 ---
---- `msync set Part Position "0,6,0"` is the most ordinary thing to type, and
+--- `ksync set Part Position "0,6,0"` is the most ordinary thing to type, and
 --- refusing it because the transport carried a string is the tool being
 --- pedantic about its own internals. Errors name the format that would work.
 function Value.coerce(text: string, current: any): any

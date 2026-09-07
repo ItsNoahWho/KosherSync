@@ -1,10 +1,10 @@
-# MuslimSync
+# KosherSync
 
 Drives a running Roblox Studio from the command line: read and write the live
 DataModel, capture the viewport, and run Luau inside a real playtest.
 
-Requires the MuslimSync app running and a Studio place open with the plugin
-connected. `msync status` says whether both are true; `msync doctor` says what
+Requires the KosherSync app running and a Studio place open with the plugin
+connected. `ksync status` says whether both are true; `ksync doctor` says what
 to do when they are not. Check one of them first if anything else fails.
 
 The daemon answers on a unix socket as well as on port 7900, and the CLI
@@ -17,7 +17,7 @@ networking, where connecting to 127.0.0.1 fails with EPERM whatever the port.
 npm run check                     # tests, plugin lint, file-size gate, this file's drift gate
 npm run build:plugin -- --install # build the plugin into Studio's plugins folder
 npm run gen:agents                # regenerate the tool section below
-npm link                          # puts `msync` on PATH; without it, node cli/msync.js
+npm link                          # puts `ksync` on PATH; without it, node cli/ksync.js
 aftman install                    # stylua and selene at the versions aftman.toml pins
 ```
 
@@ -47,7 +47,7 @@ twice in this project's history, both times after the commit had already landed.
 - **Do not verify the app with `npx electron .`.** It launches Electron's own
   bundle, so the Dock and menu bar say "Electron" until someone notices and
   restarts it. To drive the real app over CDP:
-  `open dist/MuslimSync.app --args --remote-debugging-port=9333` — branded and
+  `open dist/KosherSync.app --args --remote-debugging-port=9333` — branded and
   debuggable. `npm run start:dev` is the raw form and is for terminal logs.
 - macOS arm64 is the only platform vendored or tested.
 
@@ -96,7 +96,7 @@ twice in this project's history, both times after the commit had already landed.
 
 ### Also available
 
-Not spelled out here. `msync help <group>` lists any of these in full.
+Not spelled out here. `ksync help <group>` lists any of these in full.
 
 | Group | Commands |
 | --- | --- |
@@ -104,14 +104,13 @@ Not spelled out here. `msync help <group>` lists any of these in full.
 | Playtest | `playtest`, `playing`, `stop`, `run`, `test` |
 | Sync | `sync`, `changes`, `accept`, `cancel`, `connect`, `disconnect` |
 | Info | `capabilities`, `status`, `projects`, `commands`, `doctor`, `help`, `new-command`, `map`, `agents` |
-| Deen | `verse` |
 
 ## Conventions worth knowing
 
 - **Paths** are `/`-separated from the DataModel root: `Workspace/Baseplate`.
   An empty path is the DataModel itself.
 - **Selectors** in `query` take `**` for any depth, and match a Name *or* a
-  ClassName: `msync query 'StarterGui/**/TextButton'`.
+  ClassName: `ksync query 'StarterGui/**/TextButton'`.
 - **Typed properties take the string you would type.** `Position 0,6,0`,
   `Color 255,0,0`, `Color '#3b82f6'`, `Size 4,1,2`, `Material Neon`. The plugin
   reads the type already in the property and converts. Do not hand-build
@@ -121,7 +120,7 @@ Not spelled out here. `msync help <group>` lists any of these in full.
 - **Every write is one undo step.** A failed write is rolled back rather than
   half-applied.
 - **Read scripts from disk, not through Studio.** In a synced project every
-  script is already a file — open it with your normal file tools. `msync source`
+  script is already a file — open it with your normal file tools. `ksync source`
   costs a round trip per file, cannot be grepped across, and hands you a second
   copy of the thing you are about to edit on disk. Use it only for what is not
   on disk: an unsynced place, or a draft the user has not saved yet.
@@ -139,26 +138,26 @@ Branch on these rather than parsing prose.
 | Code | Meaning | What to do |
 | --- | --- | --- |
 | 0 | fine | — |
-| 2 | bad usage | fix the command; `msync help <cmd>` |
+| 2 | bad usage | fix the command; `ksync help <cmd>` |
 | 3 | no plugin connected | ask the user to open a place in Studio |
 | 4 | the plugin refused | read the message; it names the cause |
 | 5 | cannot reach the daemon | read the message — "is the app running?" and "a sandbox is blocking loopback" are different failures |
 | 6 | a test failed | the place is wrong, not the tool |
-| 7 | the setup is broken | run `msync doctor`; it says what to fix |
+| 7 | the setup is broken | run `ksync doctor`; it says what to fix |
 
 ## Turning commands off
 
-A project can disable commands in `.muslimsync/config.json`
+A project can disable commands in `.koshersync/config.json`
 (`commands.disable`, or `commands.only` for an allowlist). Anything disabled
-is absent from this file and from `msync commands`, so if a command is listed
+is absent from this file and from `ksync commands`, so if a command is listed
 here it is available.
 
 ## Adding a command
 
 A folder with a `command.json` and one of `run.js`, `run.luau`, or
 `workflow.json` becomes a CLI verb, an app button, and a registry entry at
-once. `msync new-command <name>` scaffolds a working one into this project's
-`.muslimsync/commands/` (or `~/.muslimsync/commands/` with `--global`, for
+once. `ksync new-command <name>` scaffolds a working one into this project's
+`.koshersync/commands/` (or `~/.koshersync/commands/` with `--global`, for
 every project); `--kind` picks `luau`, `node`, or `workflow`. See
 `commands/` for one of each kind.
 
@@ -166,16 +165,16 @@ every project); `--kind` picks `luau`, `node`, or `workflow`. See
 
 The clipboard lives in the daemon, not in Studio, so it is not tied to one
 place. Neither place has to be a project, and with both open there is no
-switching at all — `msync status` lists what is connected and the `--place`
+switching at all — `ksync status` lists what is connected and the `--place`
 to name it:
 
 ```bash
-msync status                                       # see what is open
-msync copy ServerScriptService/QuestSystem --place 1
-msync paste ServerScriptService --place 2
+ksync status                                       # see what is open
+ksync copy ServerScriptService/QuestSystem --place 1
+ksync paste ServerScriptService --place 2
 ```
 
-Several paths at once also work, and `msync copy` with no path takes whatever
+Several paths at once also work, and `ksync copy` with no path takes whatever
 is selected in Studio. With only one place open, `--place` can be left off.
 
 Without `--place`, a command runs in the place this directory's project is
@@ -186,7 +185,7 @@ identifiers. A read falls back to the daemon's default instead, which is
 whichever place connected most recently.
 
 Select by identifier, never by name: every unpublished place is called
-"Place1". `msync status` prints the `--place` value for each.
+"Place1". `ksync status` prints the `--place` value for each.
 
 It is a real .rbxm round-trip through SerializationService, so what lands is the
 exact instances — scripts with their source, properties, and everything nested
@@ -204,8 +203,8 @@ and faster than recreating it with `new` and `set`.
 This file is deliberately short. For a command's flags and examples:
 
 ```bash
-msync help <command>      # human-readable
-msync commands --raw      # the whole registry as JSON
+ksync help <command>      # human-readable
+ksync commands --raw      # the whole registry as JSON
 ```
 
 ## Do not

@@ -1,6 +1,6 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Util = require(MuslimSync.Util)
+local Util = require(KosherSync.Util)
 
 export type Error = {
 	message: string,
@@ -30,7 +30,7 @@ local Error = {
 	NotRemovable = "Tried to remove an instance of class: $1 that is not removable",
 	HydrationFailed = "Failed to hydrate root service, snapshot: $1",
 	ValidationFailed = "Skipped property: $1 from instance: $2, because it contains malformed data: $3",
-	MeshLoadFailed = "Failed to load MeshPart: $1. If you just updated Roblox Studio, please restart MuslimSync session!",
+	MeshLoadFailed = "Failed to load MeshPart: $1. If you just updated Roblox Studio, please restart KosherSync session!",
 }
 
 function Error.__new(message: string, kind: string): Error

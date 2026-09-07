@@ -1,7 +1,7 @@
 --!strict
 -- Selector matching over the live tree.
 --
--- `msync query 'StarterGui/**/TextButton'` is the difference between an agent
+-- `ksync query 'StarterGui/**/TextButton'` is the difference between an agent
 -- making one call and making forty. `*` matches one segment, `**` matches zero
 -- or more, and a trailing class filter narrows without another traversal.
 --
@@ -9,9 +9,9 @@
 -- place, and an unbounded walk on a real game is the difference between a
 -- useful tool and one nobody dares run.
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Value = require(MuslimSync.Control.Value)
+local Value = require(KosherSync.Control.Value)
 
 local MAX_MATCHES = 1000
 local MAX_NODES = 20000

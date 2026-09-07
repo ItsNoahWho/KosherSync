@@ -4,8 +4,8 @@
 // loopback: connecting to 127.0.0.1 fails with EPERM whatever port you pick.
 // Argon and Ro Sync are usable from inside such a shell because an agent drives
 // them by editing files — their daemons watch the filesystem, so nothing has to
-// open a socket. MuslimSync's control channel had no such path, so every
-// `msync ls` died at the sandbox boundary.
+// open a socket. KosherSync's control channel had no such path, so every
+// `ksync ls` died at the sandbox boundary.
 //
 // A unix socket is a file. It is gated by filesystem permissions rather than by
 // the network stack, so a network sandbox does not touch it. Same server, same
@@ -31,7 +31,7 @@ import path from "node:path";
  * pipe namespace is machine-global and has no directories in it.
  */
 export function socketPath(directory) {
-  if (process.platform === "win32") return "\\\\.\\pipe\\muslimsync-daemon";
+  if (process.platform === "win32") return "\\\\.\\pipe\\koshersync-daemon";
 
   return path.join(directory, "daemon.sock");
 }

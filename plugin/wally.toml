@@ -1,10 +1,10 @@
 [package]
-name = "muslimsync/muslimsync"
-authors = ["MuslimSync", "Dervex (Argon)"]
+name = "koshersync/koshersync"
+authors = ["KosherSync", "Dervex (Argon)"]
 description = "Roblox Studio sync, control, and agent tooling"
 registry = "https://github.com/UpliftGames/wally-index"
 license = "Apache-2.0"
-# DO NOT bump this to a MuslimSync product version. Core/init.luau:230 refuses
+# DO NOT bump this to a KosherSync product version. Core/init.luau:230 refuses
 # to sync unless SemVer major.minor matches the Argon server it dials, so this
 # field tracks the vendored argon binary (2.0.28). Product version lives in
 # src/Version.luau.

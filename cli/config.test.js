@@ -11,11 +11,11 @@ after(() => temporary.forEach((dir) => rmSync(dir, { recursive: true, force: tru
 
 /** A project with the given config, plus a nested folder to search up from. */
 function project(config) {
-  const root = mkdtempSync(path.join(tmpdir(), "msync-config-"));
+  const root = mkdtempSync(path.join(tmpdir(), "ksync-config-"));
   temporary.push(root);
 
-  mkdirSync(path.join(root, ".muslimsync"), { recursive: true });
-  if (config !== null) writeFileSync(path.join(root, ".muslimsync", "config.json"), config);
+  mkdirSync(path.join(root, ".koshersync"), { recursive: true });
+  if (config !== null) writeFileSync(path.join(root, ".koshersync", "config.json"), config);
 
   const deep = path.join(root, "src", "Shared");
   mkdirSync(deep, { recursive: true });
@@ -53,7 +53,7 @@ test("it is found from a subdirectory", () => {
   // An agent runs from wherever it happens to be, usually not the project root.
   const { root, deep } = project('{"commands":{"disable":["eval"]}}');
 
-  assert.equal(findConfig(deep), path.join(root, ".muslimsync", "config.json"));
+  assert.equal(findConfig(deep), path.join(root, ".koshersync", "config.json"));
   assert.equal(isEnabled("eval", readConfig(deep)), false);
 });
 
@@ -114,7 +114,7 @@ test("clearing the list leaves no empty key behind", () => {
   const { root } = project('{"commands":{"disable":["eval"]}}');
   writeDisabled(root, []);
 
-  const raw = JSON.parse(readFileSync(path.join(root, ".muslimsync", "config.json"), "utf8"));
+  const raw = JSON.parse(readFileSync(path.join(root, ".koshersync", "config.json"), "utf8"));
   assert.deepEqual(raw, {});
 });
 
@@ -124,7 +124,7 @@ test("other settings in the file survive a write", () => {
   const { root } = project('{"projectName":"mine","commands":{"disable":["eval"]}}');
   writeDisabled(root, ["photo"]);
 
-  const raw = JSON.parse(readFileSync(path.join(root, ".muslimsync", "config.json"), "utf8"));
+  const raw = JSON.parse(readFileSync(path.join(root, ".koshersync", "config.json"), "utf8"));
   assert.equal(raw.projectName, "mine");
   assert.deepEqual(raw.commands.disable, ["photo"]);
 });
@@ -133,6 +133,6 @@ test("the list is sorted, so the file does not churn in git", () => {
   const { root } = project(null);
   writeDisabled(root, ["source", "eval", "photo"]);
 
-  const raw = JSON.parse(readFileSync(path.join(root, ".muslimsync", "config.json"), "utf8"));
+  const raw = JSON.parse(readFileSync(path.join(root, ".koshersync", "config.json"), "utf8"));
   assert.deepEqual(raw.commands.disable, ["eval", "photo", "source"]);
 });

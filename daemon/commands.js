@@ -4,7 +4,7 @@
 // gives you the CLI command, an entry in the agent registry, and a button in
 // the app — all from the same declaration, with nothing to register.
 //
-// This is where MuslimSync deliberately differs from Ro Sync, whose command
+// This is where KosherSync deliberately differs from Ro Sync, whose command
 // registry is 62 JSON files that only produce documentation for commands
 // defined separately in Rust. Here the registry is the implementation.
 
@@ -17,8 +17,8 @@ import { pathToFileURL } from "node:url";
 export function searchRoots({ project, appRoot } = {}) {
   const roots = [];
 
-  if (project) roots.push(path.join(project, ".muslimsync", "commands"));
-  roots.push(path.join(homedir(), ".muslimsync", "commands"));
+  if (project) roots.push(path.join(project, ".koshersync", "commands"));
+  roots.push(path.join(homedir(), ".koshersync", "commands"));
   if (appRoot) roots.push(path.join(appRoot, "commands"));
 
   return roots;
@@ -44,7 +44,7 @@ export function validate(manifest, folder) {
   }
 
   if (path.basename(folder) !== name) {
-    // Otherwise `msync foo` runs the thing in the `bar` folder, and nobody can
+    // Otherwise `ksync foo` runs the thing in the `bar` folder, and nobody can
     // find it again.
     throw new CommandError(`${folder}: name "${name}" must match its folder name`);
   }

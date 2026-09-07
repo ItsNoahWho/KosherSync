@@ -48,10 +48,10 @@ test("playtest prose ships only when playtests are in scope", () => {
 });
 
 test("the index tells the agent a command that actually exists", () => {
-  // It says to run `msync help <group>`; if that did nothing, indexing would be
+  // It says to run `ksync help <group>`; if that did nothing, indexing would be
   // worse than omitting.
   const markdown = renderAgentsMd();
-  assert.match(markdown, /msync help <group>/);
+  assert.match(markdown, /ksync help <group>/);
 });
 
 test("usage lines mark required and optional arguments distinctly", () => {
@@ -74,7 +74,7 @@ test("it is deterministic, so the drift check can compare against disk", () => {
 });
 
 test("it stays short enough to inject", () => {
-  // It goes into a context window. Flags and examples live in `msync help`,
+  // It goes into a context window. Flags and examples live in `ksync help`,
   // which an agent can call when it actually needs them.
   const markdown = renderAgentsMd();
   assert.ok(markdown.length < 7500, `AGENTS.md is ${markdown.length} chars; keep it under 7500`);
@@ -95,7 +95,7 @@ test("installing keeps whatever the project already told its agents", () => {
   const merged = mergeInto("# My Game\n\nBuild with `npm run build`.\n");
 
   assert.match(merged, /Build with `npm run build`/);
-  assert.ok(merged.indexOf("My Game") < merged.indexOf("MuslimSync"));
+  assert.ok(merged.indexOf("My Game") < merged.indexOf("KosherSync"));
 });
 
 test("installing twice leaves one section, not two", () => {
@@ -105,22 +105,22 @@ test("installing twice leaves one section, not two", () => {
   const twice = mergeInto(once);
 
   assert.equal(once, twice);
-  assert.equal(twice.match(/begin muslimsync/g).length, 1);
+  assert.equal(twice.match(/begin koshersync/g).length, 1);
 });
 
 test("an out-of-date section is replaced, not appended to", () => {
-  const stale = "# My Game\n\n<!-- begin muslimsync -->\nold and wrong\n<!-- end muslimsync -->\n";
+  const stale = "# My Game\n\n<!-- begin koshersync -->\nold and wrong\n<!-- end koshersync -->\n";
   const merged = mergeInto(stale);
 
   assert.ok(!merged.includes("old and wrong"));
-  assert.equal(merged.match(/begin muslimsync/g).length, 1);
+  assert.equal(merged.match(/begin koshersync/g).length, 1);
   assert.match(merged, /My Game/);
 });
 
 test("text after our section survives an update", () => {
   // Ours is a block in the middle of someone else's file, and everything
   // outside the sentinels belongs to them.
-  const stale = "# Game\n\n<!-- begin muslimsync -->\nold\n<!-- end muslimsync -->\n\n## Deploy\n\nRun ship.sh.\n";
+  const stale = "# Game\n\n<!-- begin koshersync -->\nold\n<!-- end koshersync -->\n\n## Deploy\n\nRun ship.sh.\n";
   const merged = mergeInto(stale);
 
   assert.match(merged, /## Deploy/);
@@ -138,7 +138,7 @@ test("the section is nested a level below the project's own headings", () => {
 });
 
 test("the repo's own build rules are never installed into someone else's project", () => {
-  // A game's repository wants the tool brief; MuslimSync's build rules there
+  // A game's repository wants the tool brief; KosherSync's build rules there
   // would be noise at best and misleading at worst.
   assert.match(renderAgentsMd({ repo: true }), /Working on this repo/);
   assert.ok(!renderAgentsMd().includes("Working on this repo"));
@@ -186,7 +186,7 @@ import { installBrief } from "./install.js";
 
 /** An empty project directory, since installing reads and writes real files. */
 function project(claudeMd) {
-  const directory = mkdtempSync(path.join(tmpdir(), "msync-agents-"));
+  const directory = mkdtempSync(path.join(tmpdir(), "ksync-agents-"));
   if (claudeMd !== undefined) writeFileSync(path.join(directory, "CLAUDE.md"), claudeMd);
   return directory;
 }
@@ -200,7 +200,7 @@ test("installing bridges the brief into CLAUDE.md", () => {
     installBrief(directory);
 
     assert.match(readFileSync(path.join(directory, "CLAUDE.md"), "utf8"), /^@AGENTS\.md$/m);
-    assert.match(readFileSync(path.join(directory, "AGENTS.md"), "utf8"), /begin muslimsync/);
+    assert.match(readFileSync(path.join(directory, "AGENTS.md"), "utf8"), /begin koshersync/);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
@@ -246,7 +246,7 @@ test("a CLAUDE.md without the import gains it in a marked block", () => {
     const after = readFileSync(path.join(directory, "CLAUDE.md"), "utf8");
 
     assert.match(after, /Build with `npm run build`/);
-    assert.match(after, /<!-- begin muslimsync -->\n\n@AGENTS\.md\n\n<!-- end muslimsync -->/);
+    assert.match(after, /<!-- begin koshersync -->\n\n@AGENTS\.md\n\n<!-- end koshersync -->/);
     assert.ok(after.indexOf("My Game") < after.indexOf("@AGENTS.md"));
 
     installBrief(directory);

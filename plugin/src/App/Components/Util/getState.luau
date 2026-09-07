@@ -1,6 +1,6 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Fusion = require(MuslimSync.Packages.Fusion)
+local Fusion = require(KosherSync.Packages.Fusion)
 
 local Computed = Fusion.Computed
 

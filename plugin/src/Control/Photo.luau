@@ -97,7 +97,7 @@ end
 --- known colour, and the whole solve rests on knowing it.
 local function backdrop(camera: Camera, distance: number, size: number): (Part, Frame)
 	local part = Instance.new("Part")
-	part.Name = "MuslimSyncBackdrop"
+	part.Name = "KosherSyncBackdrop"
 	part.Anchored = true
 	part.CanCollide = false
 	part.CanQuery = false

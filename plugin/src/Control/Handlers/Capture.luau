@@ -11,14 +11,14 @@
 
 local RunService = game:GetService("RunService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Artifacts = require(MuslimSync.Control.Artifacts)
-local Path = require(MuslimSync.Control.Path)
-local Photo = require(MuslimSync.Control.Photo)
-local Playtest = require(MuslimSync.Control.Playtest)
-local Screenshot = require(MuslimSync.Control.Screenshot)
-local Pixels = require(MuslimSync.Control.Pixels)
+local Artifacts = require(KosherSync.Control.Artifacts)
+local Path = require(KosherSync.Control.Path)
+local Photo = require(KosherSync.Control.Photo)
+local Playtest = require(KosherSync.Control.Playtest)
+local Screenshot = require(KosherSync.Control.Screenshot)
+local Pixels = require(KosherSync.Control.Pixels)
 
 -- A 3/4 view reads as depth rather than as an elevation drawing, and leaving
 -- a quarter of the subject's radius as air keeps it off the frame edge.

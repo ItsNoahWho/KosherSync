@@ -1,4 +1,4 @@
--- The MuslimSync wordmark row: mark, product name, and version.
+-- The KosherSync wordmark row: mark, product name, and version.
 --
 -- Replaces Argon's uploaded banner image, which we have no right to ship under
 -- our own name. Drawing it also means the mark tracks the theme.
@@ -9,11 +9,11 @@
 -- empty space. Nothing in this file auto-sizes on Y, and the version sits in
 -- the layout rather than being pinned to a corner.
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 local Components = App.Components
 
-local Fusion = require(MuslimSync.Packages.Fusion)
+local Fusion = require(KosherSync.Packages.Fusion)
 
 local Theme = require(App.Theme)
 
@@ -71,9 +71,8 @@ return function(props: Props): Frame
 								AutomaticSize = Enum.AutomaticSize.None,
 								Size = UDim2.fromScale(1, 1),
 								BackgroundTransparency = 1,
-								-- The meem renders through Studio's font
-								-- fallback; no bundled Arabic face needed.
-								Text = "\u{0645}",
+								Text = "K",
+								Font = Theme.Fonts.Bold,
 								TextSize = Theme.TextSize.Medium,
 								TextXAlignment = Enum.TextXAlignment.Center,
 								TextYAlignment = Enum.TextYAlignment.Center,
@@ -83,7 +82,7 @@ return function(props: Props): Frame
 					},
 					Text {
 						LayoutOrder = 2,
-						Text = "MuslimSync",
+						Text = "KosherSync",
 						Font = Theme.Fonts.Bold,
 						TextSize = Theme.TextSize.Large,
 						Color = Theme.Colors.Text,

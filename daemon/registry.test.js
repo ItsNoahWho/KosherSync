@@ -15,7 +15,7 @@ let registry;
 beforeEach(() => {
   root = freshRoot();
   elsewhere = freshRoot();
-  // Never the real ~/.muslimsync. The file is a parameter precisely so a test
+  // Never the real ~/.koshersync. The file is a parameter precisely so a test
   // can point it at a directory it owns and throws away.
   registry = path.join(freshRoot(), "projects.json");
 });

@@ -1,20 +1,8 @@
-/* Amiri, bundled. System Arabic faces do not carry the Quranic annotation
- * marks Uthmani text uses — U+06E1, U+06DA, U+06E5 and friends rendered as
- * tofu boxes mid-verse. Amiri covers them. SIL Open Font License. */
-@font-face {
-  font-family: "Amiri";
-  src: url("fonts/amiri-arabic-400.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
-}
-
-/* MuslimSync — Discord-flavoured shell.
+/* KosherSync — Discord-flavoured shell.
  *
  * Discord's surface ladder and metrics, because the structure maps cleanly:
- * the server rail is a project switcher, channels are views, and the embed is
- * exactly the right frame for the verse card. Blurple is swapped for green.
+ * the server rail is a project switcher and channels are views. Blurple is
+ * swapped for green.
  */
 
 :root {
@@ -45,9 +33,6 @@
 
   --sans: "gg sans", -apple-system, BlinkMacSystemFont, "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  /* Amiri first: it is the only one of these guaranteed to have the Quranic
-     annotation marks. The rest are fallbacks if the bundled file fails. */
-  --arabic: "Amiri", "SF Arabic", "Geeza Pro", "Al Bayan", "Traditional Arabic", "Segoe UI", serif;
 
   --ease: cubic-bezier(0.2, 0, 0, 1);
   --elevation-low: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
@@ -207,8 +192,9 @@ strong {
 }
 
 .rail-glyph {
-  font-family: var(--arabic);
-  font-size: 22px;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 18px;
   line-height: 1;
 }
 
@@ -338,109 +324,6 @@ strong {
   text-align: center;
 }
 
-/* ------------------------------------------------- verse card as embed */
-
-.embed {
-  position: relative;
-  margin: 0 8px 8px;
-  padding: 11px 12px 10px 13px;
-  /* Discord's embed shape: accent stripe down the left, subtle fill. */
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius-sm);
-  background: var(--panel);
-}
-
-.embed-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 7px;
-}
-
-.embed-author {
-  color: var(--fg);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.embed-tag {
-  padding: 1px 6px;
-  border-radius: 8px;
-  background: rgba(59, 165, 93, 0.16);
-  color: var(--accent);
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.embed-tag:empty {
-  display: none;
-}
-
-.verse-arabic {
-  margin-bottom: 6px;
-  font-family: var(--arabic);
-  font-size: 17px;
-  /* Uthmani diacritics stack high; anything tighter clips them. */
-  line-height: 2.1;
-  text-align: right;
-  color: var(--fg);
-}
-
-.verse-arabic.is-hidden,
-.verse-arabic:empty {
-  display: none;
-}
-
-.verse-translation {
-  color: var(--text);
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.embed-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 9px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.embed-ref {
-  color: var(--faint);
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.embed-actions {
-  display: flex;
-  gap: 2px;
-}
-
-.icon-button {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--channel);
-  cursor: pointer;
-  transition: background-color 0.1s var(--ease), color 0.1s var(--ease);
-}
-
-.icon-button:hover {
-  background: var(--raised);
-  color: var(--fg);
-}
-
-.icon-button.is-done {
-  color: var(--accent);
-}
 
 /* -------------------------------------------------------- user panel */
 
@@ -465,8 +348,9 @@ strong {
 }
 
 .avatar-glyph {
-  font-family: var(--arabic);
-  font-size: 15px;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
   line-height: 1;
 }
 
@@ -1051,34 +935,3 @@ strong {
   background: var(--content-hover, #35373c);
 }
 
-/* ------------------------------------------------------------ prayer card */
-
-.prayer-list {
-  list-style: none;
-  margin: 10px 0 4px;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px 14px;
-}
-
-.prayer-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 13px;
-  color: var(--text-muted, #b5bac1);
-}
-
-.prayer-row.is-next {
-  background: color-mix(in srgb, var(--accent, #5865f2) 18%, transparent);
-  color: var(--text, #f2f3f5);
-}
-
-.prayer-time {
-  font-variant-numeric: tabular-nums;
-  color: var(--text, #f2f3f5);
-}

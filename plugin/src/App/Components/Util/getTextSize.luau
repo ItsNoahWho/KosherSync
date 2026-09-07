@@ -1,7 +1,7 @@
 local TextService = game:GetService("TextService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 
 local Theme = require(App.Theme)
 

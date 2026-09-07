@@ -14,7 +14,7 @@ test("a daemon that is not listening is a failure with a fix", async () => {
   const daemon = find(results, "daemon");
 
   assert.equal(daemon.level, "fail");
-  assert.match(daemon.fix, /MuslimSync app|npm start/);
+  assert.match(daemon.fix, /KosherSync app|npm start/);
 });
 
 test("the rest of the checks still run when the daemon is down", async () => {

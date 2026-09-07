@@ -8,9 +8,9 @@
 local LogService = game:GetService("LogService")
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Value = require(MuslimSync.Control.Value)
+local Value = require(KosherSync.Control.Value)
 
 local MAX_OUTPUT_LINES = 200
 local MAX_LOG_LINES = 500

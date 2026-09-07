@@ -6,16 +6,7 @@
 
 const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("muslimsync", {
-  verse: {
-    today: () => ipcRenderer.invoke("verse:today"),
-    draw: (ref) => ipcRenderer.invoke("verse:draw", ref),
-    pool: () => ipcRenderer.invoke("verse:pool"),
-    copy: (text) => ipcRenderer.invoke("verse:copy", text),
-    onFocus: (handler) => {
-      ipcRenderer.on("verse:focus", () => handler());
-    },
-  },
+contextBridge.exposeInMainWorld("koshersync", {
   daemon: {
     status: () => ipcRenderer.invoke("daemon:status"),
     onChange: (handler) => {
@@ -62,9 +53,6 @@ contextBridge.exposeInMainWorld("muslimsync", {
   },
   conflicts: {
     list: () => ipcRenderer.invoke("conflicts:list"),
-  },
-  prayers: {
-    today: () => ipcRenderer.invoke("prayers:today"),
   },
   settings: {
     get: () => ipcRenderer.invoke("settings:get"),

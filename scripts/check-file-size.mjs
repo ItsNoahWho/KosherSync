@@ -5,7 +5,7 @@
 // decided to write those; they accreted because nothing said stop.
 //
 // GRANDFATHERED lists files inherited from the Argon fork that were already over
-// the line when MuslimSync started. The list may shrink, never grow: adding an
+// the line when KosherSync started. The list may shrink, never grow: adding an
 // entry is not an option, splitting the file is.
 
 import { readFileSync, readdirSync, statSync } from "node:fs";
@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const LIMIT = 400;
 
-const ROOTS = ["plugin/src", "daemon", "cli", "app", "quran", "commands", "scripts"];
+const ROOTS = ["plugin/src", "daemon", "cli", "app", "commands", "scripts"];
 const SKIP = new Set(["node_modules", "Packages", "Lib", "dist", "target", ".git"]);
 const EXTENSIONS = new Set([".luau", ".lua", ".js", ".mjs"]);
 

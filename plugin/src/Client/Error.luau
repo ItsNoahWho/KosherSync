@@ -1,6 +1,6 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Util = require(MuslimSync.Util)
+local Util = require(KosherSync.Util)
 
 export type Error = {
 	message: string,
@@ -9,7 +9,7 @@ export type Error = {
 
 local Error = {
 	Unknown = "Unknown HTTP error: $1",
-	-- MuslimSync client
+	-- KosherSync client
 	AlreadySubscribed = "Client with this ID: $1, already subscribed to the server",
 	NotSubscribed = "Client with this ID: $1, was not subscribed to the server",
 	-- HttpService

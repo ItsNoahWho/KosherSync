@@ -10,10 +10,10 @@ local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local CollectionService = game:GetService("CollectionService")
 local Selection = game:GetService("Selection")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Path = require(MuslimSync.Control.Path)
-local Value = require(MuslimSync.Control.Value)
+local Path = require(KosherSync.Control.Path)
+local Value = require(KosherSync.Control.Value)
 
 local MAX_TAGS = 64
 
@@ -28,7 +28,7 @@ local resolve = Path.resolve
 --- A failure cancels the recording rather than committing a half-applied
 --- change: a partial write the user cannot cleanly undo is worse than none.
 local function recorded<T>(name: string, body: () -> T): T
-	local recording = ChangeHistoryService:TryBeginRecording(`MuslimSync: {name}`)
+	local recording = ChangeHistoryService:TryBeginRecording(`KosherSync: {name}`)
 	local ok, result = pcall(body)
 
 	if recording then

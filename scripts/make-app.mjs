@@ -1,4 +1,4 @@
-// Builds dist/MuslimSync.app.
+// Builds dist/KosherSync.app.
 //
 // `npm start` runs Electron's own bundle, so macOS reads the Dock name, the
 // icon, and the menu bar title out of Electron.app's Info.plist — which is why
@@ -20,10 +20,10 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ELECTRON = path.join(ROOT, "node_modules", "electron", "dist", "Electron.app");
-const OUT = path.join(ROOT, "dist", "MuslimSync.app");
+const OUT = path.join(ROOT, "dist", "KosherSync.app");
 
-const NAME = "MuslimSync";
-const IDENTIFIER = "com.muslimsync.app";
+const NAME = "KosherSync";
+const IDENTIFIER = "com.koshersync.app";
 
 if (process.platform !== "darwin") {
   // The bundle layout, the plist, and iconutil are all macOS. Saying so beats
@@ -46,7 +46,7 @@ function buildIcon(resources) {
     return null;
   }
 
-  const work = mkdtempSync(path.join(tmpdir(), "muslimsync-icon-"));
+  const work = mkdtempSync(path.join(tmpdir(), "koshersync-icon-"));
   const iconset = path.join(work, `${NAME}.iconset`);
   mkdirSync(iconset);
 
@@ -108,7 +108,7 @@ mkdirSync(app, { recursive: true });
 
 writeFileSync(
   path.join(app, "package.json"),
-  `${JSON.stringify({ name: "muslimsync", productName: NAME, main: "launch.cjs" }, null, 2)}\n`,
+  `${JSON.stringify({ name: "koshersync", productName: NAME, main: "launch.cjs" }, null, 2)}\n`,
 );
 
 writeFileSync(

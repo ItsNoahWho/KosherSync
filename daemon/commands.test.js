@@ -24,7 +24,7 @@ function makeCommand(name, { manifest = {}, handler = "run.js", body = "export d
 }
 
 beforeEach(() => {
-  root = realpathSync(mkdtempSync(path.join(tmpdir(), "msync-commands-")));
+  root = realpathSync(mkdtempSync(path.join(tmpdir(), "ksync-commands-")));
   temporary.push(root);
 });
 
@@ -48,7 +48,7 @@ test("rejects names that could not be typed as a CLI verb", () => {
 });
 
 test("the name must match the folder", () => {
-  // Otherwise `msync foo` runs whatever is in the `bar` folder.
+  // Otherwise `ksync foo` runs whatever is in the `bar` folder.
   assert.throws(() => validate({ name: "foo", description: "x" }, "/x/bar"), /must match its folder/);
 });
 

@@ -1,9 +1,9 @@
 local ContentProvider = game:GetService("ContentProvider")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Util = require(MuslimSync.Util)
-local Log = require(MuslimSync.Log)
+local Util = require(KosherSync.Util)
+local Log = require(KosherSync.Log)
 
 local Assets = require(script.Parent.Assets)
 

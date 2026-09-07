@@ -16,7 +16,7 @@ import { socketIsLive } from "../daemon/socket.js";
 
 /** Where the app puts it. Mirrors app/settings.js's DIR. */
 export function defaultSocket() {
-  return path.join(homedir(), ".muslimsync", "daemon.sock");
+  return path.join(homedir(), ".koshersync", "daemon.sock");
 }
 
 /**

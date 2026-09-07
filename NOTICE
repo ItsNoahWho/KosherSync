@@ -1,4 +1,4 @@
-MuslimSync
+KosherSync
 
 The Studio plugin (plugin/) is a fork of Argon's Roblox plugin, and the
 vendored sync engine (vendor/argon/) is built from a fork of the Argon CLI:
@@ -8,5 +8,4 @@ vendored sync engine (vendor/argon/) is built from a fork of the Argon CLI:
   Licensed under the Apache License, Version 2.0
 
 Ideas for playtest script injection and transparent capture were drawn from
-Ro Sync. Quran text in quran/ is from the Tanzil project (tanzil.net) and
-carries its own terms.
+Ro Sync.

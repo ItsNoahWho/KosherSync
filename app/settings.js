@@ -8,21 +8,12 @@ import { readFileSync, writeFileSync, mkdirSync, renameSync } from "node:fs";
 import { homedir } from "node:os";
 import path from "node:path";
 
-import { DEFAULT_TIME, parseTime } from "./reminder.js";
-
-export const DIR = path.join(homedir(), ".muslimsync");
+export const DIR = path.join(homedir(), ".koshersync");
 const FILE = path.join(DIR, "settings.json");
 
 export const DEFAULTS = {
   projectsRoot: path.join(homedir(), "projects"),
   controlPort: 7900,
-  reminder: { enabled: true, ...DEFAULT_TIME },
-  // location is null until someone sets it: a wrong guessed city notifying at
-  // wrong times is worse than no notifications. `msync prayers` sets it.
-  prayer: { enabled: true, location: null, method: "mwl", asr: "standard" },
-  translation: "khattab",
-  showArabic: true,
-  lastReminderDay: null,
 };
 
 export function read() {
@@ -35,16 +26,7 @@ export function read() {
     return { ...DEFAULTS };
   }
 
-  const merged = { ...DEFAULTS, ...stored, reminder: { ...DEFAULTS.reminder, ...(stored.reminder ?? {}) } };
-
-  // A bad time would otherwise throw deep inside the scheduler at 9am.
-  try {
-    parseTime(merged.reminder);
-  } catch {
-    merged.reminder = { ...DEFAULTS.reminder, enabled: merged.reminder.enabled !== false };
-  }
-
-  return merged;
+  return { ...DEFAULTS, ...stored };
 }
 
 export function write(settings) {

@@ -7,7 +7,7 @@
     "dryRun": { "type": "boolean", "default": false }
   },
   "examples": [
-    "msync anchor-all",
-    "msync anchor-all --path Workspace/Level1 --dryRun true"
+    "ksync anchor-all",
+    "ksync anchor-all --path Workspace/Level1 --dryRun true"
   ]
 }

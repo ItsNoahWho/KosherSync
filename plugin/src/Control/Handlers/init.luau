@@ -8,9 +8,9 @@
 -- state (like the op list) without requiring this module back and creating a
 -- cyclic require.
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Version = require(MuslimSync.Version)
+local Version = require(KosherSync.Version)
 
 local Handlers = {}
 

@@ -1,7 +1,7 @@
 // Per-project configuration.
 //
 // A project decides which commands exist in it. Disabling one does not just
-// refuse it at the call — it removes it from `msync help`, from the registry an
+// refuse it at the call — it removes it from `ksync help`, from the registry an
 // agent reads, and from the generated AGENTS.md. An agent cannot misuse a tool
 // it was never told about, which is a stronger guarantee than a warning.
 //
@@ -11,7 +11,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-const FILE = path.join(".muslimsync", "config.json");
+const FILE = path.join(".koshersync", "config.json");
 
 export class ConfigError extends Error {}
 

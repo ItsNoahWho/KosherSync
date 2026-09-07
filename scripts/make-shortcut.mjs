@@ -1,4 +1,4 @@
-// Gives MuslimSync a Windows app identity: an icon, a Start-menu entry, and an
+// Gives KosherSync a Windows app identity: an icon, a Start-menu entry, and an
 // AppUserModelID tying the two to the running window.
 //
 // `npm start` launches node_modules/electron/dist/electron.exe, so Windows has
@@ -22,15 +22,15 @@ import { buildIco, readIcoEntries } from "./ico.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const LOGO = path.join(ROOT, "assets", "Logo.png");
-const ICO = path.join(ROOT, "assets", "muslimsync.ico");
+const ICO = path.join(ROOT, "assets", "koshersync.ico");
 
-const NAME = "MuslimSync";
+const NAME = "KosherSync";
 const DESCRIPTION = "Roblox Studio sync, control, and agent tooling.";
 
 // Must stay identical to app/main.js's setAppUserModelId. Windows matches a
 // running window to a shortcut by this string; when they disagree, pinning the
 // window pins electron.exe instead of this app.
-const APP_ID = "com.muslimsync.app";
+const APP_ID = "com.koshersync.app";
 
 const PROPERTY_STORE_BLOCK = 0xa0000009;
 const STORAGE_VERSION = 0x53505331; // "1PSP"
@@ -261,4 +261,4 @@ console.log(`  arguments  ${fields.arguments}`);
 console.log(`  workdir    ${fields.workingDirectory}`);
 console.log(`  icon       ${fields.icon}  (${sizes.join(", ")})`);
 console.log(`  appId      ${readAppId(LNK) ?? "not set"}`);
-console.log("\nPin it from the Start menu: search MuslimSync, right-click, Pin to taskbar.");
+console.log("\nPin it from the Start menu: search KosherSync, right-click, Pin to taskbar.");

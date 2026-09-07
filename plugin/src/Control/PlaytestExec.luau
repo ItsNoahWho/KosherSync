@@ -49,7 +49,7 @@ function Exec.run(source: string): (boolean, string, boolean)
 	end
 
 	local holder = Instance.new("Folder")
-	holder.Name = "MuslimSyncExec"
+	holder.Name = "KosherSyncExec"
 
 	local done = Instance.new("BindableEvent")
 	done.Name = "Done"

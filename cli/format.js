@@ -202,7 +202,7 @@ export function render(command, result) {
     case "run": {
       if (result.ok === false) return `${red("error")} ${result.error}`;
 
-      // Decoded the same way `msync test` decodes it: the same script through
+      // Decoded the same way `ksync test` decodes it: the same script through
       // two commands should not print two different shapes.
       const value = decodeValue(result);
 
@@ -235,7 +235,7 @@ function bytes(n) {
 
 /** The help screen, derived from the command table. */
 export function help(custom = [], available = () => true) {
-  const lines = [bold("msync") + dim(" — Roblox Studio from the command line"), ""];
+  const lines = [bold("ksync") + dim(" — Roblox Studio from the command line"), ""];
 
   for (const group of GROUPS) {
     const entries = Object.entries(COMMANDS).filter(([name, spec]) => spec.group === group && available(name));
@@ -257,7 +257,7 @@ export function help(custom = [], available = () => true) {
     lines.push("");
   }
 
-  lines.push(dim("--raw for JSON · --port to target another daemon · msync <command> --help"));
+  lines.push(dim("--raw for JSON · --port to target another daemon · ksync <command> --help"));
   return lines.join("\n");
 }
 
@@ -281,7 +281,7 @@ export function groupHelp(name) {
     "",
     ...entries.map(([command, spec]) => `  ${command.padEnd(width)}  ${spec.summary}`),
     "",
-    dim(`msync help <command> for flags and examples`),
+    dim(`ksync help <command> for flags and examples`),
   ].join("\n");
 }
 
@@ -295,9 +295,9 @@ export function commandHelp(name) {
   if (spec.positional) {
     const required = (spec.positional.required ?? []).map((a) => `<${a}>`);
     const optional = (spec.positional.optional ?? []).map((a) => `[${a}]`);
-    lines.push("", `  msync ${name} ${[...required, ...optional].join(" ")}`.trimEnd());
+    lines.push("", `  ksync ${name} ${[...required, ...optional].join(" ")}`.trimEnd());
   } else if (spec.variadic) {
-    lines.push("", `  msync ${name} [${spec.variadic}...]`);
+    lines.push("", `  ksync ${name} [${spec.variadic}...]`);
   }
 
   if (spec.flags) {

@@ -1,5 +1,5 @@
 --!strict
--- MuslimSync's own product version.
+-- KosherSync's own product version.
 --
 -- Deliberately separate from `manifest.package.version` (wally.toml), which is
 -- pinned to the Argon server's major.minor for the sync compatibility check in

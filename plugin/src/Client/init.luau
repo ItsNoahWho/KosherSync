@@ -1,13 +1,13 @@
 local HttpService = game:GetService("HttpService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Promise = require(MuslimSync.Packages.Promise)
+local Promise = require(KosherSync.Packages.Promise)
 
-local Types = require(MuslimSync.Types)
-local Place = require(MuslimSync.Place)
-local Log = require(MuslimSync.Log)
-local MsgPack = require(MuslimSync.Lib.MsgPack)
+local Types = require(KosherSync.Types)
+local Place = require(KosherSync.Place)
+local Log = require(KosherSync.Log)
+local MsgPack = require(KosherSync.Lib.MsgPack)
 
 local Http = require(script.Http)
 local Error = require(script.Error)

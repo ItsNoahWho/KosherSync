@@ -1,12 +1,12 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Dom = require(MuslimSync.Lib.Dom)
+local Dom = require(KosherSync.Lib.Dom)
 
-local Log = require(MuslimSync.Log)
-local Util = require(MuslimSync.Util)
-local Types = require(MuslimSync.Types)
-local Config = require(MuslimSync.Config)
-local equals = require(MuslimSync.Helpers.equals)
+local Log = require(KosherSync.Log)
+local Util = require(KosherSync.Util)
+local Types = require(KosherSync.Types)
+local Config = require(KosherSync.Config)
+local equals = require(KosherSync.Helpers.equals)
 
 local Error = require(script.Parent.Error)
 local Changes = require(script.Parent.Changes)

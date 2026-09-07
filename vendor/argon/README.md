@@ -1,6 +1,6 @@
 # Vendored argon
 
-MuslimSync does not build argon; it ships one. The binary is a black box that
+KosherSync does not build argon; it ships one. The binary is a black box that
 owns file <-> DataModel sync, and nothing in this repo compiles Rust.
 
 ## Layout

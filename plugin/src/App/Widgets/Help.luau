@@ -1,8 +1,8 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 local Components = App.Components
 
-local Fusion = require(MuslimSync.Packages.Fusion)
+local Fusion = require(KosherSync.Packages.Fusion)
 
 local Theme = require(App.Theme)
 
@@ -51,7 +51,7 @@ type Props = {
 
 return function(props: Props): DockWidgetPluginGui
 	return Widget {
-		Name = "MuslimSync - Help",
+		Name = "KosherSync - Help",
 		OverrideEnabled = true,
 		MinimumSize = Vector2.new(400, 350),
 		Closed = props.Closed,
@@ -70,12 +70,12 @@ return function(props: Props): DockWidgetPluginGui
 					},
 					Entry {
 						Header "1. Setting up the project",
-						Paragraph "Open the MuslimSync desktop app, pick a projects folder, and press <b>Create Project</b>. If this place has no project yet, you can also create one straight from the <b>Connect</b> page here.",
-						Paragraph "From a terminal, <b>msync init</b> does the same thing for the current folder.",
+						Paragraph "Open the KosherSync desktop app, pick a projects folder, and press <b>Create Project</b>. If this place has no project yet, you can also create one straight from the <b>Connect</b> page here.",
+						Paragraph "From a terminal, <b>ksync init</b> does the same thing for the current folder.",
 					},
 					Entry {
 						Header "2. Starting the server",
-						Paragraph "The desktop app starts a sync server for every project you switch on. To run one by hand instead, use <b>msync serve</b>.",
+						Paragraph "The desktop app starts a sync server for every project you switch on. To run one by hand instead, use <b>ksync serve</b>.",
 					},
 					Entry {
 						Header "3. Connecting to the server",

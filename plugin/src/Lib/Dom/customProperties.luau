@@ -240,7 +240,7 @@ return {
 				return true, instance.MeshContent
 			end,
 			write = function()
-				-- MuslimSync handles this in a custom way
+				-- KosherSync handles this in a custom way
 				return true
 			end,
 		},
@@ -249,7 +249,7 @@ return {
 				return true, instance.MeshSize
 			end,
 			write = function()
-				-- MuslimSync handles this in a custom way
+				-- KosherSync handles this in a custom way
 				return true
 			end,
 		},

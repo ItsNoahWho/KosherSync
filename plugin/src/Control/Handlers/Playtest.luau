@@ -8,9 +8,9 @@
 
 local RunService = game:GetService("RunService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Bridge = require(MuslimSync.Control.Playtest)
+local Bridge = require(KosherSync.Control.Playtest)
 
 local MAX_PLAYERS = 8
 
@@ -47,7 +47,7 @@ return function(_context)
 
 			-- Test args reach the clone through StudioTestService:GetTestArgs,
 			-- which is how a playscript would receive its configuration.
-			local testArgs = { muslimsync = true }
+			local testArgs = { koshersync = true }
 
 			-- Execute*Async yields until the playtest ends, so it runs on its
 			-- own thread: the caller wants the test started, not finished.
@@ -63,7 +63,7 @@ return function(_context)
 				end)
 
 				if not ok then
-					warn(`[MuslimSync] playtest ended with an error: {tostring(err)}`)
+					warn(`[KosherSync] playtest ended with an error: {tostring(err)}`)
 				end
 			end)
 

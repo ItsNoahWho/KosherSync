@@ -1,7 +1,7 @@
 // Lifecycle for the vendored `argon serve` process, one per project.
 //
 // Argon is a black box here: we start it, wait for its port to answer, and stop
-// it. Nothing in MuslimSync reaches into how it syncs.
+// it. Nothing in KosherSync reaches into how it syncs.
 //
 // `spawn` and `probe` are injectable so the state machine — port allocation,
 // readiness, crash-before-ready, double start, stop — is testable without

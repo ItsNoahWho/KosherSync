@@ -13,14 +13,14 @@ export const COMMANDS = {
     group: "Navigate",
     summary: "Read an instance, or one property of it",
     positional: { required: ["path"], optional: ["prop"] },
-    examples: ["msync get Workspace/Camera", "msync get Workspace/Camera FieldOfView"],
+    examples: ["ksync get Workspace/Camera", "ksync get Workspace/Camera FieldOfView"],
   },
   ls: {
     op: "ls",
     group: "Navigate",
     summary: "List the children of an instance",
     positional: { optional: ["path"] },
-    examples: ["msync ls", "msync ls ReplicatedStorage"],
+    examples: ["ksync ls", "ksync ls ReplicatedStorage"],
   },
   tree: {
     op: "tree",
@@ -28,14 +28,14 @@ export const COMMANDS = {
     summary: "Print a subtree",
     positional: { optional: ["path"] },
     flags: { depth: "how deep to descend (default 3)" },
-    examples: ["msync tree Workspace --depth 2"],
+    examples: ["ksync tree Workspace --depth 2"],
   },
   props: {
     op: "props",
     group: "Navigate",
     summary: "Print an instance's readable properties",
     positional: { required: ["path"] },
-    examples: ["msync props Workspace/Baseplate"],
+    examples: ["ksync props Workspace/Baseplate"],
   },
   source: {
     op: "source",
@@ -43,7 +43,7 @@ export const COMMANDS = {
     summary: "Print a script's source — for unsynced places and unsaved drafts",
     flags: { force: "read through Studio even when the place is synced" },
     positional: { required: ["path"] },
-    examples: ["msync source ReplicatedStorage/Config"],
+    examples: ["ksync source ReplicatedStorage/Config"],
   },
   query: {
     op: "query",
@@ -51,14 +51,14 @@ export const COMMANDS = {
     summary: "Match a selector against the live tree",
     positional: { required: ["selector"] },
     flags: { class: "only instances of this class", props: "comma-separated properties to include" },
-    examples: ["msync query 'StarterGui/**/TextButton'", "msync query 'Workspace/*' --class Model"],
+    examples: ["ksync query 'StarterGui/**/TextButton'", "ksync query 'Workspace/*' --class Model"],
   },
   find: {
     op: "find",
     group: "Navigate",
     summary: "Find descendants by class and/or name",
     flags: { class: "class name", name: "name substring", under: "restrict to a subtree" },
-    examples: ["msync find --class ProximityPrompt", "msync find --name Boss --under Workspace"],
+    examples: ["ksync find --class ProximityPrompt", "ksync find --name Boss --under Workspace"],
   },
 
   // ------------------------------------------------------------- mutation
@@ -68,21 +68,21 @@ export const COMMANDS = {
     summary: "Set one property",
     positional: { required: ["path", "prop", "value"] },
     flags: { forceParent: "override the Parent guardrail" },
-    examples: ["msync set Workspace/Camera FieldOfView 80"],
+    examples: ["ksync set Workspace/Camera FieldOfView 80"],
   },
   new: {
     op: "new",
     group: "Write",
     summary: "Create an instance",
     positional: { required: ["class"], optional: ["parent", "name"] },
-    examples: ["msync new Part Workspace Crate"],
+    examples: ["ksync new Part Workspace Crate"],
   },
   rm: {
     op: "rm",
     group: "Write",
     summary: "Destroy an instance",
     positional: { required: ["path"] },
-    examples: ["msync rm Workspace/Crate"],
+    examples: ["ksync rm Workspace/Crate"],
   },
   mv: {
     op: "mv",
@@ -90,28 +90,28 @@ export const COMMANDS = {
     summary: "Reparent an instance",
     positional: { required: ["from", "to"] },
     flags: { force: "allow a cross-service move" },
-    examples: ["msync mv Workspace/Crate ReplicatedStorage"],
+    examples: ["ksync mv Workspace/Crate ReplicatedStorage"],
   },
   attr: {
     op: "attr",
     group: "Write",
     summary: "Attributes: ls, set, rm",
     positional: { required: ["path"], optional: ["action", "name", "value"] },
-    examples: ["msync attr Workspace/Boss", "msync attr Workspace/Boss set tier elite"],
+    examples: ["ksync attr Workspace/Boss", "ksync attr Workspace/Boss set tier elite"],
   },
   tag: {
     op: "tag",
     group: "Write",
     summary: "CollectionService tags: ls, add, rm",
     positional: { required: ["path"], optional: ["action", "name"] },
-    examples: ["msync tag Workspace/Boss add enemy"],
+    examples: ["ksync tag Workspace/Boss add enemy"],
   },
   select: {
     op: "select",
     group: "Write",
     summary: "Read or set the Studio selection",
     variadic: "paths",
-    examples: ["msync select", "msync select Workspace/Boss"],
+    examples: ["ksync select", "ksync select Workspace/Boss"],
   },
 
   // -------------------------------------------------------------- runtime
@@ -120,14 +120,14 @@ export const COMMANDS = {
     group: "Studio",
     summary: "Run Luau inside Studio",
     positional: { required: ["source"] },
-    examples: ["msync eval 'return #workspace:GetChildren()'"],
+    examples: ["ksync eval 'return #workspace:GetChildren()'"],
   },
   logs: {
     op: "logs",
     group: "Studio",
     summary: "Recent Studio output",
     flags: { level: "info | warn | error", limit: "how many lines" },
-    examples: ["msync logs --level warn"],
+    examples: ["ksync logs --level warn"],
   },
   undo: { op: "undo", group: "Studio", summary: "Undo the last change" },
   redo: { op: "redo", group: "Studio", summary: "Redo the last undone change" },
@@ -151,10 +151,10 @@ export const COMMANDS = {
       ui: "\"none\" leaves the GUI out (StudioCaptureService captures only)",
     },
     examples: [
-      "msync photo --out shot.png",
-      "msync photo --subject Workspace/Boss --out boss.png",
-      "msync photo --subject Workspace/Boss --isolate --out boss.png",
-      "msync photo --region 0,0,512,512 --out crop.png",
+      "ksync photo --out shot.png",
+      "ksync photo --subject Workspace/Boss --out boss.png",
+      "ksync photo --subject Workspace/Boss --isolate --out boss.png",
+      "ksync photo --region 0,0,512,512 --out crop.png",
     ],
   },
   authorize: {
@@ -179,7 +179,7 @@ export const COMMANDS = {
     op: "sync_accept",
     group: "Sync",
     summary: "Answer the waiting sync prompt yes",
-    examples: ["msync accept --place 130505358256570"],
+    examples: ["ksync accept --place 130505358256570"],
   },
   cancel: {
     op: "sync_cancel",
@@ -192,7 +192,7 @@ export const COMMANDS = {
     summary: "Attach this place to a project, starting its server if needed",
     positional: { optional: ["project"] },
     timeoutMs: 30000,
-    examples: ["msync connect", "msync connect ED2"],
+    examples: ["ksync connect", "ksync connect ED2"],
   },
   disconnect: {
     op: "sync_disconnect",
@@ -206,7 +206,7 @@ export const COMMANDS = {
     positional: { optional: ["mode"] },
     flags: { players: "PlayClients in multiplayer mode (1-8)" },
     timeoutMs: 30000,
-    examples: ["msync playtest", "msync playtest multiplayer --players 2"],
+    examples: ["ksync playtest", "ksync playtest multiplayer --players 2"],
   },
   playing: { op: "playtest_status", group: "Playtest", summary: "Is a playtest running, and which contexts are up" },
   stop: { op: "playtest_stop", group: "Playtest", summary: "End the running playtest" },
@@ -218,8 +218,8 @@ export const COMMANDS = {
     flags: { context: "server (default) or client", script: "read the source from a file instead" },
     timeoutMs: 30000,
     examples: [
-      "msync run 'return #game.Players:GetPlayers()'",
-      "msync run --script checks/spawn.luau --context client",
+      "ksync run 'return #game.Players:GetPlayers()'",
+      "ksync run --script checks/spawn.luau --context client",
     ],
   },
   test: {
@@ -232,7 +232,7 @@ export const COMMANDS = {
       mode: "play (default), run, or multiplayer",
       players: "PlayClients in multiplayer mode (1-8)",
     },
-    examples: ["msync test checks/spawn.luau", "msync test checks/net.luau --mode multiplayer --players 2"],
+    examples: ["ksync test checks/spawn.luau", "ksync test checks/net.luau --mode multiplayer --players 2"],
   },
 
   // ------------------------------------------------------------- transfer
@@ -241,14 +241,14 @@ export const COMMANDS = {
     group: "Transfer",
     summary: "Copy instances to the cross-project clipboard",
     variadic: "paths",
-    examples: ["msync copy Workspace/Boss", "msync copy   # uses the Studio selection"],
+    examples: ["ksync copy Workspace/Boss", "ksync copy   # uses the Studio selection"],
   },
   paste: {
     op: "clipboard_paste",
     group: "Transfer",
     summary: "Paste the clipboard into the connected place",
     positional: { optional: ["to"] },
-    examples: ["msync paste", "msync paste ReplicatedStorage"],
+    examples: ["ksync paste", "ksync paste ReplicatedStorage"],
   },
 
   // ---------------------------------------------------------------- local
@@ -256,12 +256,11 @@ export const COMMANDS = {
   status: { local: "status", group: "Info", summary: "Daemon, plugin, and project status" },
   projects: { local: "projects", group: "Info", summary: "List known projects" },
   commands: { local: "commands", group: "Info", summary: "Machine-readable command registry" },
-  verse: { local: "verse", group: "Deen", summary: "Today's verse" },
   doctor: {
     local: "doctor",
     group: "Info",
     summary: "Check the setup and say what to fix",
-    examples: ["msync doctor"],
+    examples: ["ksync doctor"],
   },
   help: { local: "help", group: "Info", summary: "Show this help" },
   "new-command": {
@@ -271,11 +270,11 @@ export const COMMANDS = {
     positional: { required: ["name"] },
     flags: {
       kind: "luau (default, runs in Studio), node (runs on this machine), or workflow (declarative steps)",
-      global: "put it in ~/.muslimsync/commands for every project, instead of this one's .muslimsync/commands",
+      global: "put it in ~/.koshersync/commands for every project, instead of this one's .koshersync/commands",
     },
     examples: [
-      "msync new-command anchor-lights",
-      "msync new-command sweep-shots --kind node --global",
+      "ksync new-command anchor-lights",
+      "ksync new-command sweep-shots --kind node --global",
     ],
   },
   map: {
@@ -283,21 +282,21 @@ export const COMMANDS = {
     group: "Info",
     summary: "Add the code-bearing services this project does not map yet",
     flags: { dir: "which project (default: the one you are in)" },
-    examples: ["msync map", "msync map --dir ~/projects/MyGame"],
+    examples: ["ksync map", "ksync map --dir ~/projects/MyGame"],
   },
   agents: {
     local: "agents",
     group: "Info",
     summary: "Print the agent brief, or install it into a project's AGENTS.md",
     flags: {
-      install: "add or refresh the MuslimSync section in <dir>/AGENTS.md, imported from CLAUDE.md (default .)",
+      install: "add or refresh the KosherSync section in <dir>/AGENTS.md, imported from CLAUDE.md (default .)",
       only: "comma-separated groups to spell out; the rest are indexed",
       all: "spell out every group",
     },
     examples: [
-      "msync agents",
-      "msync agents --only navigate,write",
-      "msync agents --install ~/projects/MyGame --only navigate,write,playtest",
+      "ksync agents",
+      "ksync agents --only navigate,write",
+      "ksync agents --install ~/projects/MyGame --only navigate,write,playtest",
     ],
   },
 };
@@ -325,10 +324,10 @@ export const MUTATING = new Set([
 
 // Available on every op, so it is documented once rather than on each command.
 export const GLOBAL_FLAGS = {
-  place: "which connected place to act on — its ref, name, or placeId (see `msync status`)",
+  place: "which connected place to act on — its ref, name, or placeId (see `ksync status`)",
 };
 
-export const GROUPS = ["Navigate", "Write", "Studio", "Capture", "Playtest", "Sync", "Transfer", "Info", "Deen"];
+export const GROUPS = ["Navigate", "Write", "Studio", "Capture", "Playtest", "Sync", "Transfer", "Info"];
 
 /** The registry an agent reads. Derived, never hand-maintained. */
 export function registry(available = () => true) {

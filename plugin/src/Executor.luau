@@ -1,9 +1,9 @@
 --!strict
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Log = require(MuslimSync.Log)
+local Log = require(KosherSync.Log)
 
-local setWaypoint = require(MuslimSync.Helpers.setWaypoint)
+local setWaypoint = require(KosherSync.Helpers.setWaypoint)
 
 type ExecutorImpl = {
 	__index: ExecutorImpl,

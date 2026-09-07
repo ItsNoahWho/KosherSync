@@ -14,7 +14,7 @@
 // cheap to notice and cheap to drop.
 //
 // The file to use is passed in rather than derived here, the same way
-// socket.js and artifacts.js take their locations: the app owns ~/.muslimsync,
+// socket.js and artifacts.js take their locations: the app owns ~/.koshersync,
 // and the headless daemon has no state directory at all.
 
 import { mkdirSync, readFileSync, realpathSync, renameSync, writeFileSync } from "node:fs";

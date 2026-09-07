@@ -1,12 +1,12 @@
 --!strict
 local CollectionService = game:GetService("CollectionService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Signal = require(MuslimSync.Packages.Signal)
+local Signal = require(KosherSync.Packages.Signal)
 
-local Types = require(MuslimSync.Types)
-local Log = require(MuslimSync.Log)
+local Types = require(KosherSync.Types)
+local Log = require(KosherSync.Log)
 
 type Watcher = typeof(setmetatable(
 	{} :: {

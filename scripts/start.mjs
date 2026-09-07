@@ -20,7 +20,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const BUNDLE = path.join(ROOT, "dist", "MuslimSync.app");
+const BUNDLE = path.join(ROOT, "dist", "KosherSync.app");
 
 function electronDirectly() {
   // The electron package's main export is the absolute path to the binary for
@@ -63,5 +63,5 @@ if (process.platform === "win32") {
   }
 
   execFileSync("open", [BUNDLE]);
-  console.log("MuslimSync is running. Logs: npm run start:dev");
+  console.log("KosherSync is running. Logs: npm run start:dev");
 }

@@ -1,12 +1,12 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 local Components = App.Components
 local Util = Components.Util
 
-local Fusion = require(MuslimSync.Packages.Fusion)
+local Fusion = require(KosherSync.Packages.Fusion)
 
-local Config = require(MuslimSync.Config)
-local GlobalUtil = require(MuslimSync.Util)
+local Config = require(KosherSync.Config)
+local GlobalUtil = require(KosherSync.Util)
 
 local Theme = require(App.Theme)
 local default = require(Util.default)
@@ -364,7 +364,7 @@ return function(props: Props): DockWidgetPluginGui
 	local bindings = {}
 
 	return Widget {
-		Name = "MuslimSync - Settings",
+		Name = "KosherSync - Settings",
 		OverrideEnabled = true,
 		MinimumSize = Vector2.new(350, 400),
 		Closed = props.Closed,

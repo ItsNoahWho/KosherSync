@@ -1,4 +1,4 @@
-// `msync new-command` — scaffolds a custom command folder.
+// `ksync new-command` — scaffolds a custom command folder.
 //
 // The point is that the generated folder works before it is edited: every
 // template passes daemon/commands.js's load() and does something harmless when
@@ -16,8 +16,8 @@ import { UsageError } from "./args.js";
 /** Where a scope puts its commands. Mirrors daemon/commands.js's searchRoots. */
 export function rootFor(scope, { cwd = process.cwd(), home = homedir() } = {}) {
   return scope === "global"
-    ? path.join(home, ".muslimsync", "commands")
-    : path.join(cwd, ".muslimsync", "commands");
+    ? path.join(home, ".koshersync", "commands")
+    : path.join(cwd, ".koshersync", "commands");
 }
 
 const manifest = (name) =>
@@ -29,7 +29,7 @@ const manifest = (name) =>
       args: {
         path: { type: "string", default: "Workspace", help: "instance to operate on" },
       },
-      examples: [`msync ${name}`, `msync ${name} --path Workspace/Level1`],
+      examples: [`ksync ${name}`, `ksync ${name} --path Workspace/Level1`],
     },
     null,
     2,
@@ -81,25 +81,25 @@ export const KIND_NAMES = Object.keys(KINDS);
  * A self-contained brief for an AI assistant that is about to write a command.
  *
  * Built from the same templates the scaffolder writes, so what the assistant is
- * told and what `msync new-command` produces cannot drift apart. Self-contained
+ * told and what `ksync new-command` produces cannot drift apart. Self-contained
  * on purpose: it is meant to be pasted into a chat that has never seen this
  * repository.
  */
 export function authoringBrief() {
-  return `# Writing a MuslimSync custom command
+  return `# Writing a KosherSync custom command
 
-You are writing a custom command for MuslimSync, a tool that drives a running
-Roblox Studio from the command line (\`msync\`). One folder becomes a CLI verb,
-a button in the MuslimSync app, and an agent-registry entry at once. There is
+You are writing a custom command for KosherSync, a tool that drives a running
+Roblox Studio from the command line (\`ksync\`). One folder becomes a CLI verb,
+a button in the KosherSync app, and an agent-registry entry at once. There is
 no registration step and no build: the folder is discovered on every run.
 
 ## Where the folder goes
 
-- \`<project>/.muslimsync/commands/<name>/\` — available in that project only
-- \`~/.muslimsync/commands/<name>/\` — available from every project
+- \`<project>/.koshersync/commands/<name>/\` — available in that project only
+- \`~/.koshersync/commands/<name>/\` — available from every project
 
 A project command overrides a global one with the same name. The shortcut
-\`msync new-command <name> [--kind luau|node|workflow] [--global]\` scaffolds a
+\`ksync new-command <name> [--kind luau|node|workflow] [--global]\` scaffolds a
 working folder; editing that beats starting blank.
 
 ## The folder
@@ -119,7 +119,7 @@ Rules the loader enforces:
 - \`description\` is required and must be non-empty
 - an arg may be \`"required": true\` or have a \`"default"\`, never both
 - an arg's \`type\` is \`string\` (the default), \`number\`, or \`boolean\`
-- the name must not shadow a built-in verb — \`msync commands --raw\` lists
+- the name must not shadow a built-in verb — \`ksync commands --raw\` lists
   what is taken
 
 ## Pick one handler kind
@@ -158,11 +158,11 @@ ${workflowTemplate().trimEnd()}
 
 ## Check it works
 
-- \`msync <name>\` runs it immediately — no build, no restart
-- \`msync help <name>\` shows its args; \`msync help\` lists it under its category
-- a folder that fails to load is reported in \`msync commands --raw\` under
+- \`ksync <name>\` runs it immediately — no build, no restart
+- \`ksync help <name>\` shows its args; \`ksync help\` lists it under its category
+- a folder that fails to load is reported in \`ksync commands --raw\` under
   \`problems\`, with the reason
-- \`msync agents\` prints the full tool brief (paths, selectors, exit codes) if
+- \`ksync agents\` prints the full tool brief (paths, selectors, exit codes) if
   you need more than this page
 `;
 }
@@ -183,7 +183,7 @@ export function scaffold({ name, kind = "luau", scope = "project", cwd, home }) 
   if (COMMANDS[name]) {
     // Built-ins dispatch first, so a custom command with this name could never
     // be invoked — better to say so now than after it is written.
-    throw new UsageError(`"${name}" is a built-in msync command; pick another name`);
+    throw new UsageError(`"${name}" is a built-in ksync command; pick another name`);
   }
 
   const chosen = KINDS[kind];

@@ -7,10 +7,10 @@
 -- Paths are `/`-separated from the DataModel root, e.g. `Workspace/Baseplate`.
 -- An empty path is the DataModel itself.
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Path = require(MuslimSync.Control.Path)
-local Value = require(MuslimSync.Control.Value)
+local Path = require(KosherSync.Control.Path)
+local Value = require(KosherSync.Control.Value)
 
 -- Bounded so one careless call cannot serialize a whole place into a frame.
 local MAX_CHILDREN = 500

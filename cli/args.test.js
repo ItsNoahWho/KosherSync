@@ -68,7 +68,7 @@ test("coerces JSON scalars", () => {
 });
 
 test("bare words stay strings so values need no quoting", () => {
-  // `msync set … Material Neon` must work without shell quoting games.
+  // `ksync set … Material Neon` must work without shell quoting games.
   assert.equal(coerce("Neon"), "Neon");
   assert.equal(coerce("Workspace/Camera"), "Workspace/Camera");
   assert.equal(coerce(""), "");

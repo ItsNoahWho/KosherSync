@@ -1,10 +1,10 @@
 local HttpService = game:GetService("HttpService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Promise = require(MuslimSync.Packages.Promise)
-local MsgPack = require(MuslimSync.Lib.MsgPack)
-local Config = require(MuslimSync.Config)
+local Promise = require(KosherSync.Packages.Promise)
+local MsgPack = require(KosherSync.Lib.MsgPack)
+local Config = require(KosherSync.Config)
 
 local Error = require(script.Parent.Error)
 
@@ -12,7 +12,7 @@ local Error = require(script.Parent.Error)
 -- Absent in dist builds - there the AuthToken setting is used instead
 local EMBEDDED_TOKEN = ""
 do
-	local module = MuslimSync:FindFirstChild("AuthToken")
+	local module = KosherSync:FindFirstChild("AuthToken")
 
 	if module and module:IsA("ModuleScript") then
 		local ok, value = pcall(require, module)

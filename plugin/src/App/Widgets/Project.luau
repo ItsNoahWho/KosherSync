@@ -1,12 +1,12 @@
 local StudioService = game:GetService("StudioService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 local Components = App.Components
 
-local Fusion = require(MuslimSync.Packages.Fusion)
+local Fusion = require(KosherSync.Packages.Fusion)
 
-local Types = require(MuslimSync.Types)
+local Types = require(KosherSync.Types)
 local Theme = require(App.Theme)
 
 local Widget = require(Components.Plugin.Widget)
@@ -124,7 +124,7 @@ type Props = {
 
 return function(props: Props): DockWidgetPluginGui
 	return Widget {
-		Name = "MuslimSync - Project",
+		Name = "KosherSync - Project",
 		OverrideEnabled = true,
 		MinimumSize = Vector2.new(400, 300),
 		Closed = props.Closed,

@@ -1,5 +1,5 @@
 --!strict
--- Control channel: the MuslimSync-only request/response link to the Node
+-- Control channel: the KosherSync-only request/response link to the Node
 -- daemon. It is deliberately independent of `Client` (Argon's sync socket) —
 -- the two never share state, so a control failure cannot disturb a sync.
 --
@@ -11,10 +11,10 @@
 
 local HttpService = game:GetService("HttpService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Discovery = require(MuslimSync.Discovery)
-local Log = require(MuslimSync.Log)
+local Discovery = require(KosherSync.Discovery)
+local Log = require(KosherSync.Log)
 
 local Handlers = require(script.Handlers)
 local Bridge = require(script.Playtest)

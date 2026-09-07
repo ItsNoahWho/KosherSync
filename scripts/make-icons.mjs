@@ -2,7 +2,7 @@
 //
 // The fork inherited Argon's uploaded artwork, which is not ours to ship under
 // this name. These are drawn from scratch instead: a rounded square with a
-// crescent, tinted per connection state.
+// ring, tinted per connection state.
 //
 // Roblox toolbar icons must be uploaded — a plugin cannot reference a local
 // file — so this writes PNGs for you to upload once. See assets/README.md.
@@ -35,14 +35,14 @@ function roundedSquare(x, y, size, radius) {
 }
 
 /**
- * A crescent: one disc with a second, offset disc subtracted.
+ * A ring: one disc with a smaller concentric disc subtracted.
  *
  * Returns coverage 0..1 rather than a boolean so the curve does not come out
  * jagged at 32 pixels, which is roughly where Studio draws it.
  */
-function crescent(x, y, size) {
-  const outer = { x: size * 0.46, y: size * 0.5, r: size * 0.28 };
-  const inner = { x: size * 0.56, y: size * 0.46, r: size * 0.24 };
+function ring(x, y, size) {
+  const outer = { x: size * 0.5, y: size * 0.5, r: size * 0.28 };
+  const inner = { x: size * 0.5, y: size * 0.5, r: size * 0.18 };
 
   const edge = size * 0.012;
   const inOuter = 1 - smoothstep(outer.r - edge, outer.r + edge, Math.hypot(x - outer.x, y - outer.y));
@@ -67,13 +67,13 @@ function icon(hex) {
 
       // Background plate, antialiased at its rounded corners.
       const plate = 1 - smoothstep(-edge, edge, roundedSquare(x + 0.5, y + 0.5, SIZE, SIZE * 0.22));
-      const moon = crescent(x + 0.5, y + 0.5, SIZE) * plate;
+      const mark = ring(x + 0.5, y + 0.5, SIZE) * plate;
 
-      // The crescent is white over the plate; compositing rather than
+      // The ring is white over the plate; compositing rather than
       // overwriting keeps its edge smooth against the tint.
-      rgba[at] = Math.round(r * (1 - moon) + 255 * moon);
-      rgba[at + 1] = Math.round(g * (1 - moon) + 255 * moon);
-      rgba[at + 2] = Math.round(b * (1 - moon) + 255 * moon);
+      rgba[at] = Math.round(r * (1 - mark) + 255 * mark);
+      rgba[at + 1] = Math.round(g * (1 - mark) + 255 * mark);
+      rgba[at + 2] = Math.round(b * (1 - mark) + 255 * mark);
       rgba[at + 3] = Math.round(plate * 255);
     }
   }

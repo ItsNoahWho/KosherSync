@@ -5,10 +5,10 @@
 -- produce a number or a short string. Nothing here builds UI, so it can be read
 -- and tested on its own.
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Dom = require(MuslimSync.Lib.Dom)
-local Types = require(MuslimSync.Types)
+local Dom = require(KosherSync.Lib.Dom)
+local Types = require(KosherSync.Types)
 
 -- Long property values are truncated rather than wrapped: a diff row is one
 -- line, and a 4,000-character Source turns the whole list into a wall.

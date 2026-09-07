@@ -12,7 +12,7 @@ let clock;
 const temporary = [];
 
 beforeEach(() => {
-  const directory = mkdtempSync(path.join(tmpdir(), "msync-artifacts-"));
+  const directory = mkdtempSync(path.join(tmpdir(), "ksync-artifacts-"));
   temporary.push(directory);
   clock = 1_000_000;
   store = new Artifacts({ directory, now: () => clock });

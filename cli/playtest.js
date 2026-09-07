@@ -1,4 +1,4 @@
-// `msync test` — run a Luau file inside a real playtest and report a verdict.
+// `ksync test` — run a Luau file inside a real playtest and report a verdict.
 //
 // The whole point of the playtest agent is that a script gets to run where the
 // game actually runs: with a live DataModel, a spawned player, and replication

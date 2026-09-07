@@ -1,7 +1,7 @@
 --!strict
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Util = require(MuslimSync.Util)
+local Util = require(KosherSync.Util)
 
 local function fuzzy(a: number, b: number): boolean
 	return math.abs(a - b) < 0.0001

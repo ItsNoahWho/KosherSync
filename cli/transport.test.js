@@ -11,7 +11,7 @@ const temporary = [];
 after(() => temporary.forEach((dir) => rmSync(dir, { recursive: true, force: true })));
 
 const scratch = () => {
-  const dir = mkdtempSync(path.join(tmpdir(), "msync-transport-"));
+  const dir = mkdtempSync(path.join(tmpdir(), "ksync-transport-"));
   temporary.push(dir);
   return dir;
 };

@@ -3,7 +3,7 @@
 // Split from app.js to keep both readable: this is a screen of its own, and it
 // shares only the DOM, and talks to the list through events.
 
-const api = window.muslimsync;
+const api = window.koshersync;
 
 const el = {
   list: document.getElementById("project-list"),

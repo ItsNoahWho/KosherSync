@@ -3,7 +3,7 @@
 // Split from app.js so each file stays readable in one sitting; these three
 // share nothing with the sync views except the api bridge and `channels`.
 
-const api = window.muslimsync;
+const api = window.koshersync;
 
 const channels = [...document.querySelectorAll(".channel")];
 
@@ -50,7 +50,7 @@ function renderCommands({ commands }) {
     const required = Object.entries(command.args ?? {}).filter(([, spec]) => spec.required);
     run.textContent = required.length ? "CLI only" : "Run";
     run.disabled = required.length > 0;
-    run.title = required.length ? `needs --${required.map(([flag]) => flag).join(", --")}` : `msync ${command.name}`;
+    run.title = required.length ? `needs --${required.map(([flag]) => flag).join(", --")}` : `ksync ${command.name}`;
 
     run.addEventListener("click", async () => {
       run.disabled = true;

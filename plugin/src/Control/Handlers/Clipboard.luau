@@ -2,7 +2,7 @@
 -- Cross-project copy and paste.
 --
 -- Studio does the serializing. SerializationService round-trips a real .rbxm,
--- which is why MuslimSync needs no binary format parser of its own — the whole
+-- which is why KosherSync needs no binary format parser of its own — the whole
 -- reason the JavaScript side can stay JavaScript.
 --
 -- Copy serializes the selected roots in ONE call so references between them
@@ -11,11 +11,11 @@
 local Selection = game:GetService("Selection")
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Path = require(MuslimSync.Control.Path)
-local Artifacts = require(MuslimSync.Control.Artifacts)
-local Value = require(MuslimSync.Control.Value)
+local Path = require(KosherSync.Control.Path)
+local Artifacts = require(KosherSync.Control.Artifacts)
+local Value = require(KosherSync.Control.Value)
 
 local MAX_ROOTS = 64
 
@@ -144,7 +144,7 @@ return function(context)
 				fail("PLUGIN_ERROR", `deserialization failed: {tostring(instances)}`)
 			end
 
-			local recording = ChangeHistoryService:TryBeginRecording("MuslimSync paste")
+			local recording = ChangeHistoryService:TryBeginRecording("KosherSync paste")
 			local parented = {}
 
 			local applied = pcall(function()

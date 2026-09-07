@@ -30,7 +30,7 @@ Log.__setLevel(Config:get("LogLevel"))
 App.new()
 
 -- The control channel is independent of the sync connection: it dials the
--- MuslimSync daemon on its own port and keeps retrying, so agent commands work
+-- KosherSync daemon on its own port and keeps retrying, so agent commands work
 -- whether or not this place is currently syncing.
 Control.start()
 

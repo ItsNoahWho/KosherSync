@@ -1,10 +1,10 @@
 // Commands answered without touching the plugin.
 //
-// Split from msync.js so the dispatcher stays a dispatcher: these each have
+// Split from ksync.js so the dispatcher stays a dispatcher: these each have
 // their own shape, and none of them is about routing an op.
 //
 // `daemon`, `Fatal` and `EXIT` are passed in rather than imported to keep the
-// dependency pointing one way — msync.js owns the transport and the exit codes.
+// dependency pointing one way — ksync.js owns the transport and the exit codes.
 
 import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
@@ -34,7 +34,7 @@ export async function local(name, { flags, positionals = [], port, daemon, Fatal
       const { scaffold } = await import("./scaffold.js");
 
       const name = positionals[0];
-      if (!name) throw new UsageError("new-command needs a name, e.g. msync new-command anchor-lights");
+      if (!name) throw new UsageError("new-command needs a name, e.g. ksync new-command anchor-lights");
 
       const made = scaffold({
         name,
@@ -52,9 +52,9 @@ export async function local(name, { flags, positionals = [], port, daemon, Fatal
           `  ${cyan(handler.padEnd(14))}${dim(`the handler — ${made.runs}`)}`,
           "",
           `It is already live — discovery reads the folder on every run:`,
-          `  msync ${name}`,
+          `  ksync ${name}`,
           made.scope === "global"
-            ? dim("Available from every project (~/.muslimsync/commands).")
+            ? dim("Available from every project (~/.koshersync/commands).")
             : dim("Available in this project only; --global would install it for all."),
         ].join("\n"),
       };
@@ -152,22 +152,6 @@ export async function local(name, { flags, positionals = [], port, daemon, Fatal
         text: projects.length
           ? projects.map((p) => `  ${p.running ? "●" : "○"} ${p.name.padEnd(24)} ${dim(p.path)}`).join("\n")
           : dim("(no projects)"),
-      };
-    }
-
-    case "verse": {
-      const { verseOfTheDay } = await import("../quran/daily.js");
-      const verse = verseOfTheDay();
-      const translation = flags.translation ?? "khattab";
-
-      return {
-        json: verse,
-        text: [
-          verse.verses.map((v) => v.arabic).join(" "),
-          "",
-          verse.verses.map((v) => v.translations[translation]).join(" "),
-          dim(`— ${verse.surah.name} ${verse.ref}`),
-        ].join("\n"),
       };
     }
 

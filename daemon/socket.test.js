@@ -9,7 +9,7 @@ import { Daemon } from "./index.js";
 
 const temporary = [];
 const scratch = () => {
-  const dir = mkdtempSync(path.join(tmpdir(), "msync-sock-"));
+  const dir = mkdtempSync(path.join(tmpdir(), "ksync-sock-"));
   temporary.push(dir);
   return dir;
 };
@@ -19,7 +19,7 @@ after(() => {
 });
 
 test("the socket lives beside the settings", () => {
-  assert.equal(socketPath("/x/.muslimsync"), "/x/.muslimsync/daemon.sock");
+  assert.equal(socketPath("/x/.koshersync"), "/x/.koshersync/daemon.sock");
 });
 
 test("serves the same handler a port would", async () => {
@@ -127,7 +127,7 @@ test("Windows gets a named pipe, not a file in the settings folder", (t) => {
 
   try {
     Object.defineProperty(process, "platform", { value: "win32", configurable: true });
-    assert.equal(socketPath("C:\\Users\\x\\.muslimsync"), "\\\\.\\pipe\\muslimsync-daemon");
+    assert.equal(socketPath("C:\\Users\\x\\.koshersync"), "\\\\.\\pipe\\koshersync-daemon");
   } finally {
     Object.defineProperty(process, "platform", { value: real, configurable: true });
   }
@@ -140,8 +140,8 @@ test("a named pipe is never treated as a stale file to delete", async (t) => {
 
   try {
     Object.defineProperty(process, "platform", { value: "win32", configurable: true });
-    assert.equal(await clearStaleSocket("\\\\.\\pipe\\muslimsync-daemon"), true);
-    assert.equal(socketIsLive("\\\\.\\pipe\\muslimsync-daemon"), true);
+    assert.equal(await clearStaleSocket("\\\\.\\pipe\\koshersync-daemon"), true);
+    assert.equal(socketIsLive("\\\\.\\pipe\\koshersync-daemon"), true);
   } finally {
     Object.defineProperty(process, "platform", { value: real, configurable: true });
   }

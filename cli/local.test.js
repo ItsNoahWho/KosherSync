@@ -8,7 +8,7 @@ import { local } from "./local.js";
 
 /** A check file on disk, since `test` reads its source rather than taking it. */
 function checkFile(source = "return 1") {
-  const directory = mkdtempSync(path.join(tmpdir(), "msync-local-"));
+  const directory = mkdtempSync(path.join(tmpdir(), "ksync-local-"));
   const file = path.join(directory, "check.luau");
   writeFileSync(file, source);
   return { file, directory };
@@ -103,8 +103,8 @@ test("the stop still carries the place when the check itself fails", async () =>
   }
 });
 
-test("msync.js imports every node:fs call it makes", () => {
-  // `run --script` never worked: readFileSync was not imported in msync.js, so
+test("ksync.js imports every node:fs call it makes", () => {
+  // `run --script` never worked: readFileSync was not imported in ksync.js, so
   // the read threw a ReferenceError, and a bare `catch` reported it as
   // "cannot read <path>". The file was always fine; the message blamed it
   // anyway, which is the worst kind of wrong error — it sends you to inspect
@@ -112,7 +112,7 @@ test("msync.js imports every node:fs call it makes", () => {
   //
   // Checked statically because the runtime path needs a live daemon and a
   // running playtest to reach, which is exactly why nobody noticed for so long.
-  const source = readFileSync(new URL("./msync.js", import.meta.url), "utf8");
+  const source = readFileSync(new URL("./ksync.js", import.meta.url), "utf8");
 
   const imported = new Set(
     [...source.matchAll(/import\s*\{([^}]*)\}\s*from\s*"node:fs"/g)]

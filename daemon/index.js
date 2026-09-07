@@ -325,7 +325,7 @@ export async function startDaemon(options) {
 if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
   const daemon = await startDaemon();
   const { port, host } = daemon;
-  console.log(`muslimsync daemon listening on ws://${host}:${port}/control`);
+  console.log(`koshersync daemon listening on ws://${host}:${port}/control`);
 
   daemon.on("change", (status) => {
     const places = status.plugins.map((plugin) => plugin.placeId).join(", ") || "none";

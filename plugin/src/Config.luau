@@ -1,9 +1,9 @@
 local plugin = script:FindFirstAncestorWhichIsA("Plugin")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Util = require(MuslimSync.Util)
-local Log = require(MuslimSync.Log)
+local Util = require(KosherSync.Util)
+local Log = require(KosherSync.Log)
 
 export type Level = "Place" | "Game" | "Global"
 export type Setting =
@@ -136,7 +136,7 @@ function Config.load()
 	end
 end
 
--- Applies project-defined config sent by the MuslimSync server as an in-memory
+-- Applies project-defined config sent by the KosherSync server as an in-memory
 -- override layer above all other levels. Never persisted to Studio settings
 function Config.applyServerConfig(gameConfig, placeConfig)
 	local newConfigs: { [Level]: { [Setting]: any } } = { Game = {}, Place = {} }

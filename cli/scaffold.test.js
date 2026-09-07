@@ -10,7 +10,7 @@ import { scaffold, rootFor, KIND_NAMES, authoringBrief } from "./scaffold.js";
 import { load, bindArgs } from "../daemon/commands.js";
 import { UsageError } from "./args.js";
 
-const temp = () => mkdtempSync(path.join(tmpdir(), "msync-scaffold-"));
+const temp = () => mkdtempSync(path.join(tmpdir(), "ksync-scaffold-"));
 
 // The contract that matters: whatever the scaffolder writes, the daemon's own
 // loader must accept without edits. Anything else is a stub, not a scaffold.
@@ -33,24 +33,24 @@ for (const kind of KIND_NAMES) {
   });
 }
 
-test("project scope lands in <cwd>/.muslimsync/commands", () => {
+test("project scope lands in <cwd>/.koshersync/commands", () => {
   const cwd = temp();
 
   try {
     const made = scaffold({ name: "here-only", cwd });
-    assert.equal(made.folder, path.join(cwd, ".muslimsync", "commands", "here-only"));
+    assert.equal(made.folder, path.join(cwd, ".koshersync", "commands", "here-only"));
     assert.ok(existsSync(path.join(made.folder, "run.luau")));
   } finally {
     rmSync(cwd, { recursive: true, force: true });
   }
 });
 
-test("global scope lands in <home>/.muslimsync/commands", () => {
+test("global scope lands in <home>/.koshersync/commands", () => {
   const home = temp();
 
   try {
     const made = scaffold({ name: "everywhere", scope: "global", home });
-    assert.equal(made.folder, path.join(home, ".muslimsync", "commands", "everywhere"));
+    assert.equal(made.folder, path.join(home, ".koshersync", "commands", "everywhere"));
   } finally {
     rmSync(home, { recursive: true, force: true });
   }
@@ -61,7 +61,7 @@ test("rootFor matches the daemon's search roots", async () => {
   const roots = searchRoots({ project: "/some/project" });
 
   assert.equal(rootFor("project", { cwd: "/some/project" }), roots[0]);
-  assert.equal(rootFor("global", { home: "/home/someone" }), path.join("/home/someone", ".muslimsync", "commands"));
+  assert.equal(rootFor("global", { home: "/home/someone" }), path.join("/home/someone", ".koshersync", "commands"));
 });
 
 test("refuses a name that could never be a CLI verb", () => {
@@ -106,8 +106,8 @@ test("the authoring brief states the loader's rules", () => {
   // required-versus-default contradiction, and where the folder goes.
   assert.ok(brief.includes("^[a-z][a-z0-9-]{0,39}$"));
   assert.ok(/never both/.test(brief));
-  assert.ok(brief.includes(".muslimsync/commands"));
-  assert.ok(brief.includes("msync new-command"));
+  assert.ok(brief.includes(".koshersync/commands"));
+  assert.ok(brief.includes("ksync new-command"));
 });
 
 test("refuses to overwrite an existing command", () => {

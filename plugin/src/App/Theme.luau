@@ -1,9 +1,9 @@
 local plugin = script:FindFirstAncestorWhichIsA("Plugin")
 local Studio = settings().Studio
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Fusion = require(MuslimSync.Packages.Fusion)
+local Fusion = require(KosherSync.Packages.Fusion)
 
 local Value = Fusion.Value
 

@@ -1,4 +1,4 @@
-// Argument parsing for `msync`.
+// Argument parsing for `ksync`.
 //
 // Pure: argv in, a plain object out, so every quirk below is testable without
 // running a command. The quirks are deliberate — they are the ones that make a
@@ -80,7 +80,7 @@ function camel(name) {
 /**
  * Coerces a CLI string into the JSON value an op expects.
  *
- * Bare words stay strings, so `msync set … Material Neon` works without
+ * Bare words stay strings, so `ksync set … Material Neon` works without
  * quoting. Only things that unambiguously parse as JSON become JSON — which is
  * how tagged values like {"__type":"Vector3",…} get through.
  */

@@ -77,7 +77,7 @@ function Screenshot.take(args: { [string]: any }): (buffer, number, number)
 	if not can then
 		fail(
 			"PERMISSION_REQUIRED",
-			"screenshot permission is not granted — run `msync photo` once in edit mode "
+			"screenshot permission is not granted — run `ksync photo` once in edit mode "
 				.. "with Studio focused and allow the prompt"
 		)
 	end

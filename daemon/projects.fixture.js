@@ -23,7 +23,7 @@ export function makeProject(directory, project = {}) {
 
 /** A new temp root, resolved through any symlink so path comparisons hold. */
 export function freshRoot() {
-  const root = realpathSync(mkdtempSync(path.join(tmpdir(), "msync-projects-")));
+  const root = realpathSync(mkdtempSync(path.join(tmpdir(), "ksync-projects-")));
   created.push(root);
   return root;
 }

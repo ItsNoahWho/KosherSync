@@ -3,8 +3,8 @@ local TweenService = game:GetService("TweenService")
 
 local plugin = script:FindFirstAncestorWhichIsA("Plugin")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local Packages = MuslimSync.Packages
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local Packages = KosherSync.Packages
 
 local Components = script.Components
 local Widgets = script.Widgets
@@ -14,13 +14,13 @@ local Fusion = require(Packages.Fusion)
 local Signal = require(Packages.Signal)
 local Promise = require(Packages.Promise)
 
-local manifest = require(MuslimSync.manifest)
-local Config = require(MuslimSync.Config)
-local Types = require(MuslimSync.Types)
-local Util = require(MuslimSync.Util)
-local Core = require(MuslimSync.Core)
-local Log = require(MuslimSync.Log)
-local Discovery = require(MuslimSync.Discovery)
+local manifest = require(KosherSync.manifest)
+local Config = require(KosherSync.Config)
+local Types = require(KosherSync.Types)
+local Util = require(KosherSync.Util)
+local Core = require(KosherSync.Core)
+local Log = require(KosherSync.Log)
+local Discovery = require(KosherSync.Discovery)
 
 local Assets = require(script.Assets)
 local Loader = require(script.Loader)
@@ -47,7 +47,7 @@ local Error = require(Pages.Error)
 local Settings = require(Widgets.Settings)
 local Help = require(Widgets.Help)
 local Diff = require(Widgets.Diff)
-local Bridge = require(MuslimSync.Control.Bridge)
+local Bridge = require(KosherSync.Control.Bridge)
 local askUser = require(script.askUser)
 
 local New = Fusion.New
@@ -104,10 +104,10 @@ function App.new()
 
 	local toolbarButton = ToolbarButton {
 		Toolbar = Toolbar {
-			Name = "MuslimSync",
+			Name = "KosherSync",
 		},
-		Name = "MuslimSync",
-		ToolTip = "Open MuslimSync UI",
+		Name = "KosherSync",
+		ToolTip = "Open KosherSync UI",
 		Image = self.icon,
 		[OnEvent "Click"] = function()
 			isOpen:set(not peek(isOpen))
@@ -115,7 +115,7 @@ function App.new()
 	}
 
 	Widget {
-		Name = "MuslimSync",
+		Name = "KosherSync",
 		MinimumSize = peek(self.rootSize),
 		Enabled = isOpen,
 		[OnChange "Enabled"] = function(isEnabled)
@@ -329,7 +329,7 @@ function App:diff(changes: Types.Changes?, tree: any?)
 		if ok then
 			widget = built
 		else
-			warn(`MuslimSync: could not render the diff: {built}`)
+			warn(`KosherSync: could not render the diff: {built}`)
 		end
 	end
 
@@ -359,7 +359,7 @@ function App:schedulePoll()
 	end)
 end
 
--- Asks the MuslimSync master which projects exist, connects to the one synced
+-- Asks the KosherSync master which projects exist, connects to the one synced
 -- with this place (starting its serve if needed), or shows the picker.
 -- With `manual` (Connect button) a dead master falls back to vanilla connect
 function App:discover(manual: boolean?)
@@ -377,10 +377,10 @@ function App:discover(manual: boolean?)
 		end)
 		:catch(function(err)
 			if manual then
-				Log.debug("MuslimSync master unreachable, connecting directly:", err)
+				Log.debug("KosherSync master unreachable, connecting directly:", err)
 				self:connect()
 			else
-				Log.trace("MuslimSync master unreachable:", err)
+				Log.trace("KosherSync master unreachable:", err)
 				self:schedulePoll()
 			end
 		end)
@@ -424,7 +424,7 @@ function App:openProjectPicker()
 			self:projectMenu(projects, true)
 		end)
 		:catch(function(err)
-			Log.warn("MuslimSync master unreachable:", err)
+			Log.warn("KosherSync master unreachable:", err)
 			self:home()
 		end)
 end
@@ -465,8 +465,8 @@ function App:projectMenu(projects: { Discovery.ProjectInfo }, manual: boolean?)
 
 	local message = if manual
 		then "Pick a project to sync with this place:"
-		elseif #projects == 0 then "No MuslimSync project is synced with this place yet. Create one?"
-		else `Found {#projects} MuslimSync project(s), but none is synced with this place. Pick one to sync:`
+		elseif #projects == 0 then "No KosherSync project is synced with this place yet. Create one?"
+		else `Found {#projects} KosherSync project(s), but none is synced with this place. Pick one to sync:`
 
 	self:setPage(
 		Picker {

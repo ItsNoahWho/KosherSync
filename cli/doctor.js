@@ -1,4 +1,4 @@
-// `msync doctor` — why isn't it working?
+// `ksync doctor` — why isn't it working?
 //
 // Every failure this project has actually hit is in here: the app not running,
 // Studio running a stale plugin, an argon serve orphaned by a force-quit, a
@@ -38,7 +38,7 @@ async function checkDaemon(port) {
         "daemon",
         explainUnreachable(cause, port),
         // A blocked connection is not fixed by starting anything.
-        blocked ? "allow loopback in the sandbox, or run from an unsandboxed shell" : "start the MuslimSync app, or `npm start`",
+        blocked ? "allow loopback in the sandbox, or run from an unsandboxed shell" : "start the KosherSync app, or `npm start`",
       ),
     };
   }

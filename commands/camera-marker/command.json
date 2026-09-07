@@ -5,5 +5,5 @@
   "args": {
     "name": { "type": "string", "default": "CameraMarker", "help": "name for the marker" }
   },
-  "examples": ["msync camera-marker", "msync camera-marker --name Spot"]
+  "examples": ["ksync camera-marker", "ksync camera-marker --name Spot"]
 }

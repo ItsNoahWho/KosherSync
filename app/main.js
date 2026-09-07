@@ -1,9 +1,8 @@
-import { app, BrowserWindow, dialog, ipcMain, Notification, powerMonitor, shell, clipboard } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, shell } from "electron";
 import path from "node:path";
 import { watch } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-import { verseOfTheDay, poolRefs, resolve } from "../quran/daily.js";
 import { Daemon } from "../daemon/index.js";
 import { socketPath } from "../daemon/socket.js";
 import { ArgonProcesses } from "../daemon/argon.js";
@@ -11,14 +10,12 @@ import { createRoutes } from "../daemon/routes.js";
 import * as projects from "../daemon/projects.js";
 import { Artifacts } from "../daemon/artifacts.js";
 import { registerTools } from "./tools.js";
-import { armReminder } from "./reminder.js";
-import { armPrayers, prayersToday } from "./prayers.js";
 import * as settings from "./settings.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
 // Windows taskbars pin and group by this id; make-shortcut.mjs writes the same one.
-if (process.platform === "win32") app.setAppUserModelId("com.muslimsync.app");
+if (process.platform === "win32") app.setAppUserModelId("com.koshersync.app");
 
 // Projects that live somewhere the root's one-level scan cannot see. Beside
 // settings.json: the same kind of thing, and the same directory the user owns.
@@ -59,7 +56,7 @@ function createWindow() {
     minWidth: 780,
     minHeight: 520,
     titleBarStyle: process.platform === "darwin" ? "hiddenInset" : "default",
-    icon: path.join(HERE, "..", "assets", "muslimsync.ico"), // Windows and Linux; macOS uses the bundle.
+    icon: path.join(HERE, "..", "assets", "koshersync.ico"), // Windows and Linux; macOS uses the bundle.
     backgroundColor: "#0f1115",
     webPreferences: {
       preload: path.join(HERE, "preload.cjs"),
@@ -203,7 +200,7 @@ async function startDaemon() {
     daemon = null;
     daemonError =
       error.code === "EADDRINUSE"
-        ? `port ${controlPort} is already in use — another MuslimSync may be running`
+        ? `port ${controlPort} is already in use — another KosherSync may be running`
         : error.message;
   }
 
@@ -284,36 +281,9 @@ ipcMain.handle("conflicts:list", async () => {
   return results;
 });
 
-ipcMain.handle("verse:today", () => {
-  const current = settings.read();
-  return { verse: verseOfTheDay(), translation: current.translation, showArabic: current.showArabic };
-});
-
-ipcMain.handle("verse:draw", (_event, ref) => {
-  // Used by the "another verse" control. An unknown ref is the caller's bug,
-  // so let resolve throw rather than quietly substituting today's verse.
-  return resolve(ref);
-});
-
-ipcMain.handle("verse:pool", () => poolRefs());
-
-ipcMain.handle("verse:copy", (_event, text) => {
-  clipboard.writeText(String(text));
-  return true;
-});
-
-ipcMain.handle("prayers:today", () => prayersToday(settings));
-
 ipcMain.handle("settings:get", () => settings.read());
 
-ipcMain.handle("settings:set", (_event, patch) => {
-  const next = settings.update(patch ?? {});
-  // A changed time or enabled flag must take effect now, not at the next
-  // scheduled wake — otherwise turning the reminder on does nothing all day.
-  armReminder(settings, Notification, liveWindow);
-  armPrayers(settings, Notification);
-  return next;
-});
+ipcMain.handle("settings:set", (_event, patch) => settings.update(patch ?? {}));
 
 // ------------------------------------------------------------------ startup
 
@@ -332,21 +302,11 @@ registerTools({
 
 app.whenReady().then(async () => {
   createWindow();
-  armReminder(settings, Notification, liveWindow);
-  armPrayers(settings, Notification);
   watchProjectsRoot();
   await startDaemon();
 
   // The renderer may have finished loading before the daemon did.
   window?.webContents.on("did-finish-load", publishStatus);
-
-  // A laptop that slept through the trigger wakes here. The timer that was
-  // pending during sleep is unreliable, so re-evaluate against the real clock.
-  powerMonitor.on("resume", () => {
-    armReminder(settings, Notification, liveWindow);
-    // The pending prayer timer slept too; a stale one would fire hours late.
-    armPrayers(settings, Notification);
-  });
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

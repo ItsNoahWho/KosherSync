@@ -1,14 +1,14 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 local Components = App.Components
 local Util = Components.Util
 
-local Fusion = require(MuslimSync.Packages.Fusion)
-local Highlighter = require(MuslimSync.Packages.Highlighter)
-local Differ = require(MuslimSync.Lib.Differ)
+local Fusion = require(KosherSync.Packages.Fusion)
+local Highlighter = require(KosherSync.Packages.Highlighter)
+local Differ = require(KosherSync.Lib.Differ)
 
-local GlobalUtil = require(MuslimSync.Util)
-local Config = require(MuslimSync.Config)
+local GlobalUtil = require(KosherSync.Util)
+local Config = require(KosherSync.Config)
 local Theme = require(App.Theme)
 local getTextSize = require(Util.getTextSize)
 
@@ -74,7 +74,7 @@ return function(props: Props): DockWidgetPluginGui
 	).X + Theme.Padding
 
 	return Widget {
-		Name = `MuslimSync - Script Diff ({props.Name})`,
+		Name = `KosherSync - Script Diff ({props.Name})`,
 		OverrideEnabled = true,
 		MinimumSize = Vector2.new(700, 500),
 		Closed = props.Closed,

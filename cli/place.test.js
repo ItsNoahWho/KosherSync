@@ -11,7 +11,7 @@ const temporary = [];
 after(() => temporary.forEach((dir) => rmSync(dir, { recursive: true, force: true })));
 
 function project(contents, file = "default.project.json") {
-  const root = mkdtempSync(path.join(tmpdir(), "msync-place-"));
+  const root = mkdtempSync(path.join(tmpdir(), "ksync-place-"));
   temporary.push(root);
 
   if (contents !== null) writeFileSync(path.join(root, file), contents);
@@ -105,7 +105,7 @@ test("source is refused based on the target place's project, not cwd", async (t)
   const path = (await import("node:path")).default;
   const { resolveTarget } = await import("./target.js");
 
-  const root = mkdtempSync(path.join(tmpdir(), "msync-guard-"));
+  const root = mkdtempSync(path.join(tmpdir(), "ksync-guard-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
 
   const project = path.join(root, "ZombiesProject");

@@ -12,9 +12,9 @@
 -- directly, so there is no string round-trip for binary data.
 local EncodingService = game:GetService("EncodingService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Http = require(MuslimSync.Client.Http)
+local Http = require(KosherSync.Client.Http)
 
 -- Fallback only. The real size comes from the lease, so the two sides cannot
 -- drift apart: hardcoding 512 KB here while the daemon capped bodies at 256 KB

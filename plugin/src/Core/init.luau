@@ -1,20 +1,20 @@
 local ScriptEditorService = game:GetService("ScriptEditorService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Promise = require(MuslimSync.Packages.Promise)
-local Signal = require(MuslimSync.Packages.Signal)
+local Promise = require(KosherSync.Packages.Promise)
+local Signal = require(KosherSync.Packages.Signal)
 
-local Client = require(MuslimSync.Client)
-local Config = require(MuslimSync.Config)
-local Log = require(MuslimSync.Log)
-local Util = require(MuslimSync.Util)
-local Types = require(MuslimSync.Types)
-local Watcher = require(MuslimSync.Watcher)
-local Executor = require(MuslimSync.Executor)
-local SemVer = require(MuslimSync.SemVer)
-local manifest = require(MuslimSync.manifest)
-local equals = require(MuslimSync.Helpers.equals)
+local Client = require(KosherSync.Client)
+local Config = require(KosherSync.Config)
+local Log = require(KosherSync.Log)
+local Util = require(KosherSync.Util)
+local Types = require(KosherSync.Types)
+local Watcher = require(KosherSync.Watcher)
+local Executor = require(KosherSync.Executor)
+local SemVer = require(KosherSync.SemVer)
+local manifest = require(KosherSync.manifest)
+local equals = require(KosherSync.Helpers.equals)
 
 local Processor = require(script.Processor)
 local Changes = require(script.Changes)
@@ -146,7 +146,7 @@ function Core:run(): Promise.Promise
 end
 
 function Core:stop()
-	Log.trace("Stopping MuslimSync core..")
+	Log.trace("Stopping KosherSync core..")
 
 	self.status = Core.Status.Disconnecting
 
@@ -427,7 +427,7 @@ function Core:__handleOpenInEditor(enabled: boolean)
 		local id = self.tree:getId(document:GetScript())
 
 		if not id then
-			Log.trace("Document is not synced by MuslimSync, ignoring")
+			Log.trace("Document is not synced by KosherSync, ignoring")
 			return
 		end
 

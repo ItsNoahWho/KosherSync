@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// msync — the command line for MuslimSync.
+// ksync — the command line for KosherSync.
 //
 // Thin by design: it parses arguments, posts one op to the daemon, and renders
 // the answer. All the intelligence lives in the daemon and the plugin, so the
@@ -226,13 +226,13 @@ const coerceAll = (flags) =>
 
 async function main(argv) {
   const { command, positionals, flags } = parse(argv);
-  const port = Number(flags.port ?? process.env.MUSLIMSYNC_PORT ?? DEFAULT_PORT);
+  const port = Number(flags.port ?? process.env.KOSHERSYNC_PORT ?? DEFAULT_PORT);
 
   // Read first: help, the registry and dispatch all consult it.
   const config = readConfig();
 
   if (!command || command === "help") {
-    // `msync help photo` is the form people reach for first, and answering it
+    // `ksync help photo` is the form people reach for first, and answering it
     // with the full index makes the tool look like it has no per-command help.
     const topic = positionals[0];
 
@@ -277,7 +277,7 @@ async function main(argv) {
 
   // Resolved before the local branch, not after it. `test` is a local command
   // and a mutating one: it starts a playtest and injects a script. When this
-  // lived below, `msync test --place <id>` parsed the flag, dropped it, and ran
+  // lived below, `ksync test --place <id>` parsed the flag, dropped it, and ran
   // against whichever place Studio had touched most recently — so a test could
   // report on a place nobody named.
   //
@@ -301,7 +301,7 @@ async function main(argv) {
   const args = opArguments(command, spec, positionals, flags);
 
   // A playtest takes a few seconds to boot and the client context arrives after
-  // the server, so `msync playtest && msync run ...` failed on timing alone.
+  // the server, so `ksync playtest && ksync run ...` failed on timing alone.
   // Waiting is what the caller meant by naming a context.
   if (command === "run") {
     await waitForContext(

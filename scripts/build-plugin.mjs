@@ -1,4 +1,4 @@
-// Builds plugin/ into dist/MuslimSync.rbxm using the vendored argon binary.
+// Builds plugin/ into dist/KosherSync.rbxm using the vendored argon binary.
 //
 // Uses the vendored binary rather than whatever `argon` is on PATH: the plugin
 // and the sync server have to agree on a version (Core/init.luau refuses to
@@ -82,7 +82,7 @@ const args = ["build", "--yes"];
 if (install) {
   args.push("--plugin");
 } else {
-  const output = path.join(ROOT, "dist", "MuslimSync.rbxm");
+  const output = path.join(ROOT, "dist", "KosherSync.rbxm");
   mkdirSync(path.dirname(output), { recursive: true });
   args.push("--output", output);
 }

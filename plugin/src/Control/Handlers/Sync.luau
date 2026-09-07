@@ -9,11 +9,11 @@
 -- These ops answer the prompt through the same signal the buttons fire, so
 -- there is no second path that could accept something the panel would refuse.
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Bridge = require(MuslimSync.Control.Bridge)
-local Changes = require(MuslimSync.Core.Changes)
-local Discovery = require(MuslimSync.Discovery)
+local Bridge = require(KosherSync.Control.Bridge)
+local Changes = require(KosherSync.Core.Changes)
+local Discovery = require(KosherSync.Discovery)
 
 -- Enough to decide by, not so much that a reorganization floods the terminal.
 local MAX_LISTED = 200

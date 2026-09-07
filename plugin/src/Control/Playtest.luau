@@ -14,11 +14,11 @@
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Exec = require(MuslimSync.Control.PlaytestExec)
-local Screenshot = require(MuslimSync.Control.Screenshot)
-local Log = require(MuslimSync.Log)
+local Exec = require(KosherSync.Control.PlaytestExec)
+local Screenshot = require(KosherSync.Control.Screenshot)
+local Log = require(KosherSync.Log)
 
 local REQUEST_TIMEOUT = 15
 local MAX_OUTPUT = 100
@@ -92,7 +92,7 @@ local function startRuntimeAgent()
 	local function handle(connection: any, raw: string)
 		local ok, frame = pcall(HttpService.JSONDecode, HttpService, raw)
 
-		if not ok or type(frame) ~= "table" or frame.kind ~= "muslimsync-playtest" then
+		if not ok or type(frame) ~= "table" or frame.kind ~= "koshersync-playtest" then
 			return
 		end
 
@@ -100,7 +100,7 @@ local function startRuntimeAgent()
 			return
 		end
 
-		local reply: { [string]: any } = { kind = "muslimsync-playtest", t = "res", id = frame.id }
+		local reply: { [string]: any } = { kind = "koshersync-playtest", t = "res", id = frame.id }
 
 		if frame.op == "exec" then
 			local ran, result, encoded = Exec.run(tostring(frame.source or ""))
@@ -114,7 +114,7 @@ local function startRuntimeAgent()
 			-- EndTest is the runtime's own call to make; edit mode has no test
 			-- to end. It also requires a result argument.
 			local ended, err = pcall(function()
-				game:GetService("StudioTestService"):EndTest("stopped by MuslimSync")
+				game:GetService("StudioTestService"):EndTest("stopped by KosherSync")
 			end)
 
 			reply.ok = ended
@@ -147,7 +147,7 @@ local function startRuntimeAgent()
 		-- Announce first, so edit mode knows this context exists before it is
 		-- asked for anything.
 		send(connection, {
-			kind = "muslimsync-playtest",
+			kind = "koshersync-playtest",
 			t = "hello",
 			name = name,
 			isServer = RunService:IsServer(),
@@ -200,7 +200,7 @@ local function startEditCoordinator()
 	local function handle(connection: any, raw: string)
 		local ok, frame = pcall(HttpService.JSONDecode, HttpService, raw)
 
-		if not ok or type(frame) ~= "table" or frame.kind ~= "muslimsync-playtest" then
+		if not ok or type(frame) ~= "table" or frame.kind ~= "koshersync-playtest" then
 			return
 		end
 
@@ -292,7 +292,7 @@ function Playtest.request(name: string, op: string, payload: { [string]: any }):
 	local id = tostring(nextRequest)
 	pending[id] = { resolved = false, value = nil }
 
-	local frame: { [string]: any } = { kind = "muslimsync-playtest", t = "req", id = id, op = op }
+	local frame: { [string]: any } = { kind = "koshersync-playtest", t = "req", id = id, op = op }
 
 	for key, value in payload do
 		frame[key] = value

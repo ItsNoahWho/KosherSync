@@ -1,13 +1,13 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Dom = require(MuslimSync.Lib.Dom)
+local Dom = require(KosherSync.Lib.Dom)
 
-local Log = require(MuslimSync.Log)
-local Types = require(MuslimSync.Types)
-local Config = require(MuslimSync.Config)
+local Log = require(KosherSync.Log)
+local Types = require(KosherSync.Types)
+local Config = require(KosherSync.Config)
 
-local equals = require(MuslimSync.Helpers.equals)
-local setWaypoint = require(MuslimSync.Helpers.setWaypoint)
+local equals = require(KosherSync.Helpers.equals)
+local setWaypoint = require(KosherSync.Helpers.setWaypoint)
 
 local Error = require(script.Parent.Parent.Error)
 

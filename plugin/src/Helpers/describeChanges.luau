@@ -1,9 +1,9 @@
 --!strict
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 
-local Types = require(MuslimSync.Types)
-local Util = require(MuslimSync.Util)
+local Types = require(KosherSync.Types)
+local Util = require(KosherSync.Util)
 local Theme = require(App.Theme)
 
 local function hex(kind: string): string

@@ -6,17 +6,17 @@
 -- the sync loop until answered.
 --
 -- Split out of App/init.luau, which had reached the line cap. Worth its own
--- file anyway: the answer can now arrive from the panel or from `msync accept`,
+-- file anyway: the answer can now arrive from the panel or from `ksync accept`,
 -- and having one function own both paths is what keeps them honest — the CLI
 -- fires the same signal the buttons do rather than reaching past them.
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 local App = script.Parent
 local Pages = App.Pages
-local Helpers = MuslimSync.Helpers
+local Helpers = KosherSync.Helpers
 
-local Signal = require(MuslimSync.Packages.Signal)
-local Bridge = require(MuslimSync.Control.Bridge)
+local Signal = require(KosherSync.Packages.Signal)
+local Bridge = require(KosherSync.Control.Bridge)
 local describeChanges = require(Helpers.describeChanges)
 local Prompt = require(Pages.Prompt)
 
@@ -39,7 +39,7 @@ return function(app: any, message: string, changes: any, tree: any): boolean
 		Signal = signal,
 	})
 
-	-- Published so `msync accept` can answer this exact prompt. It fires the
+	-- Published so `ksync accept` can answer this exact prompt. It fires the
 	-- same signal the buttons do, so an answer from the CLI and a click are
 	-- indistinguishable from here down.
 	Bridge.setPending({

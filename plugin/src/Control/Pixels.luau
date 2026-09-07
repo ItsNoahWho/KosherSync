@@ -10,10 +10,10 @@ local AssetService = game:GetService("AssetService")
 local CaptureService = game:GetService("CaptureService")
 local RunService = game:GetService("RunService")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Artifacts = require(MuslimSync.Control.Artifacts)
-local Playtest = require(MuslimSync.Control.Playtest)
+local Artifacts = require(KosherSync.Control.Artifacts)
+local Playtest = require(KosherSync.Control.Playtest)
 
 local CAPTURE_TIMEOUT = 20
 local MAX_AXIS = 4096
@@ -41,7 +41,7 @@ function Pixels.screenshot(): string
 		fail(
 			"UNSUPPORTED",
 			"a playtest is running — capture it from inside with --context client (or server), "
-				.. "or stop it first (msync stop)"
+				.. "or stop it first (ksync stop)"
 		)
 	end
 

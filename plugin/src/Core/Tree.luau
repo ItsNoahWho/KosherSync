@@ -1,8 +1,8 @@
 --!native
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Types = require(MuslimSync.Types)
+local Types = require(KosherSync.Types)
 
 local Tree = {}
 Tree.__index = Tree

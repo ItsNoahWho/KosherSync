@@ -1,8 +1,8 @@
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
-local App = MuslimSync.App
+local KosherSync = script:FindFirstAncestor("KosherSync")
+local App = KosherSync.App
 local Components = App.Components
 
-local Fusion = require(MuslimSync.Packages.Fusion)
+local Fusion = require(KosherSync.Packages.Fusion)
 
 local Theme = require(App.Theme)
 
@@ -23,7 +23,7 @@ return function(): Frame
 		[Children] = {
 			Padding {},
 			Text {
-				Text = "Unavailable during playtest! Return to the edit mode to continue using MuslimSync",
+				Text = "Unavailable during playtest! Return to the edit mode to continue using KosherSync",
 				TextWrapped = true,
 				Font = Theme.Fonts.Mono,
 				TextSize = Theme.TextSize.Medium,

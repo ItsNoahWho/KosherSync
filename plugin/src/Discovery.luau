@@ -1,14 +1,14 @@
 local HttpService = game:GetService("HttpService")
 local ServerStorage = game:GetService("ServerStorage")
 
-local MuslimSync = script:FindFirstAncestor("MuslimSync")
+local KosherSync = script:FindFirstAncestor("KosherSync")
 
-local Promise = require(MuslimSync.Packages.Promise)
+local Promise = require(KosherSync.Packages.Promise)
 
-local Http = require(MuslimSync.Client.Http)
-local Config = require(MuslimSync.Config)
+local Http = require(KosherSync.Client.Http)
+local Config = require(KosherSync.Config)
 
--- The MuslimSync daemon, which serves these project endpoints alongside the
+-- The KosherSync daemon, which serves these project endpoints alongside the
 -- control channel. It replaces Argon's separate `argon master` process, so
 -- there is one thing to run rather than two. Project serves live on 8000+ and
 -- never collide with it.

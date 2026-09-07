@@ -2,7 +2,7 @@
 //
 // Both questions are asked before every command and neither belongs in the
 // dispatcher: one is about the working directory, the other about the project's
-// tree, and msync.js only needs the answer.
+// tree, and ksync.js only needs the answer.
 
 import path from "node:path";
 import { MUTATING } from "./commands.js";

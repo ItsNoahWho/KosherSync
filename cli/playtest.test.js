@@ -159,7 +159,7 @@ test("an op that reports ok:false is a failure, whatever its exit status", async
 });
 
 test("waitForContext is exported so `run` can use the same wait as `test`", async () => {
-  // `msync playtest && msync run ...` failed on timing alone before this: the
+  // `ksync playtest && ksync run ...` failed on timing alone before this: the
   // contexts take seconds to check in, and two commands cannot share the poll
   // unless it lives somewhere both can reach.
   const { op, calls } = fakeOp({ readyAfter: 2 });
